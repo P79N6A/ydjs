@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopCashRechargeConfigMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopCashRechargeConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="amount_total" jdbcType="NUMERIC" property="amountTotal" />
+    <result column="curren_amount" jdbcType="NUMERIC" property="currenAmount" />
+    <result column="give_amount" jdbcType="NUMERIC" property="giveAmount" />
+    <result column="customer_count" jdbcType="INTEGER" property="customerCount" />
+    <result column="amount_conf_one" jdbcType="NUMERIC" property="amountConfOne" />
+    <result column="amount_conf_two" jdbcType="NUMERIC" property="amountConfTwo" />
+    <result column="amount_conf_thr" jdbcType="NUMERIC" property="amountConfThr" />
+    <result column="amount_conf_four" jdbcType="NUMERIC" property="amountConfFour" />
+    <result column="amount_conf_five" jdbcType="NUMERIC" property="amountConfFive" />
+    <result column="amount_conf_six" jdbcType="NUMERIC" property="amountConfSix" />
+    <result column="one_amount_give" jdbcType="NUMERIC" property="oneAmountGive" />
+    <result column="two_amount_give" jdbcType="NUMERIC" property="twoAmountGive" />
+    <result column="thr_amount_give" jdbcType="NUMERIC" property="thrAmountGive" />
+    <result column="four_amount_give" jdbcType="NUMERIC" property="fourAmountGive" />
+    <result column="five_amount_give" jdbcType="NUMERIC" property="fiveAmountGive" />
+    <result column="six_amount_give" jdbcType="NUMERIC" property="sixAmountGive" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, amount_total, curren_amount, give_amount, customer_count, amount_conf_one, amount_conf_two,
+    amount_conf_thr, amount_conf_four, amount_conf_five, amount_conf_six, one_amount_give, 
+    two_amount_give, thr_amount_give, four_amount_give, five_amount_give, six_amount_give, 
+    status, flag, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shop_cash_recharge_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByShopid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_cash_recharge_config
+    where shopid = #{shopid,jdbcType=VARCHAR} and status=0
+  </select>
+
+  <select id="selectByShopidRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_cash_recharge_config
+    where shopid = #{shopid,jdbcType=VARCHAR} and status=0 FOR UPDATE;
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_cash_recharge_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopCashRechargeConfig">
+    insert into yd_shop_cash_recharge_config (id, shopid, amount_total, give_amount,
+      curren_amount, customer_count, amount_conf_one, 
+      amount_conf_two, amount_conf_thr, amount_conf_four, 
+      amount_conf_five, amount_conf_six, one_amount_give, 
+      two_amount_give, thr_amount_give, four_amount_give, 
+      five_amount_give, six_amount_give, status, 
+      flag, feature, create_date, 
+      modify_date)
+    values (nextval('seq_yd_shop_cash_recharge_config_id'), #{shopid,jdbcType=VARCHAR},
+    #{amountTotal,jdbcType=NUMERIC},#{giveAmount,jdbcType=NUMERIC},
+      #{currenAmount,jdbcType=NUMERIC}, #{customerCount,jdbcType=INTEGER}, #{amountConfOne,jdbcType=NUMERIC}, 
+      #{amountConfTwo,jdbcType=NUMERIC}, #{amountConfThr,jdbcType=NUMERIC}, #{amountConfFour,jdbcType=NUMERIC}, 
+      #{amountConfFive,jdbcType=NUMERIC}, #{amountConfSix,jdbcType=NUMERIC}, #{oneAmountGive,jdbcType=NUMERIC}, 
+      #{twoAmountGive,jdbcType=NUMERIC}, #{thrAmountGive,jdbcType=NUMERIC}, #{fourAmountGive,jdbcType=NUMERIC}, 
+      #{fiveAmountGive,jdbcType=NUMERIC}, #{sixAmountGive,jdbcType=NUMERIC}, #{status,jdbcType=INTEGER}, 
+      #{flag,jdbcType=BIGINT}, #{feature,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopCashRechargeConfig">
+    insert into yd_shop_cash_recharge_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="amountTotal != null">
+        amount_total,
+      </if>
+      <if test="currenAmount != null">
+        curren_amount,
+      </if>
+      <if test="giveAmount != null">
+        give_amount,
+      </if>
+      <if test="customerCount != null">
+        customer_count,
+      </if>
+      <if test="amountConfOne != null">
+        amount_conf_one,
+      </if>
+      <if test="amountConfTwo != null">
+        amount_conf_two,
+      </if>
+      <if test="amountConfThr != null">
+        amount_conf_thr,
+      </if>
+      <if test="amountConfFour != null">
+        amount_conf_four,
+      </if>
+      <if test="amountConfFive != null">
+        amount_conf_five,
+      </if>
+      <if test="amountConfSix != null">
+        amount_conf_six,
+      </if>
+      <if test="oneAmountGive != null">
+        one_amount_give,
+      </if>
+      <if test="twoAmountGive != null">
+        two_amount_give,
+      </if>
+      <if test="thrAmountGive != null">
+        thr_amount_give,
+      </if>
+      <if test="fourAmountGive != null">
+        four_amount_give,
+      </if>
+      <if test="fiveAmountGive != null">
+        five_amount_give,
+      </if>
+      <if test="sixAmountGive != null">
+        six_amount_give,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_cash_recharge_config_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="amountTotal != null">
+        #{amountTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="currenAmount != null">
+        #{currenAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="giveAmount != null">
+        #{giveAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="customerCount != null">
+        #{customerCount,jdbcType=INTEGER},
+      </if>
+      <if test="amountConfOne != null">
+        #{amountConfOne,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfTwo != null">
+        #{amountConfTwo,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfThr != null">
+        #{amountConfThr,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfFour != null">
+        #{amountConfFour,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfFive != null">
+        #{amountConfFive,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfSix != null">
+        #{amountConfSix,jdbcType=NUMERIC},
+      </if>
+      <if test="oneAmountGive != null">
+        #{oneAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="twoAmountGive != null">
+        #{twoAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="thrAmountGive != null">
+        #{thrAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="fourAmountGive != null">
+        #{fourAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="fiveAmountGive != null">
+        #{fiveAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="sixAmountGive != null">
+        #{sixAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopCashRechargeConfig">
+    update yd_shop_cash_recharge_config
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="amountTotal != null">
+        amount_total = #{amountTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="currenAmount != null">
+        curren_amount = #{currenAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="giveAmount != null">
+        give_amount = #{giveAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="customerCount != null">
+        customer_count = #{customerCount,jdbcType=INTEGER},
+      </if>
+      <if test="amountConfOne != null">
+        amount_conf_one = #{amountConfOne,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfTwo != null">
+        amount_conf_two = #{amountConfTwo,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfThr != null">
+        amount_conf_thr = #{amountConfThr,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfFour != null">
+        amount_conf_four = #{amountConfFour,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfFive != null">
+        amount_conf_five = #{amountConfFive,jdbcType=NUMERIC},
+      </if>
+      <if test="amountConfSix != null">
+        amount_conf_six = #{amountConfSix,jdbcType=NUMERIC},
+      </if>
+      <if test="oneAmountGive != null">
+        one_amount_give = #{oneAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="twoAmountGive != null">
+        two_amount_give = #{twoAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="thrAmountGive != null">
+        thr_amount_give = #{thrAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="fourAmountGive != null">
+        four_amount_give = #{fourAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="fiveAmountGive != null">
+        five_amount_give = #{fiveAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="sixAmountGive != null">
+        six_amount_give = #{sixAmountGive,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopCashRechargeConfig">
+    update yd_shop_cash_recharge_config
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      amount_total = #{amountTotal,jdbcType=NUMERIC},
+      curren_amount = #{currenAmount,jdbcType=NUMERIC},
+      give_amount = #{giveAmount,jdbcType=NUMERIC},
+      customer_count = #{customerCount,jdbcType=INTEGER},
+      amount_conf_one = #{amountConfOne,jdbcType=NUMERIC},
+      amount_conf_two = #{amountConfTwo,jdbcType=NUMERIC},
+      amount_conf_thr = #{amountConfThr,jdbcType=NUMERIC},
+      amount_conf_four = #{amountConfFour,jdbcType=NUMERIC},
+      amount_conf_five = #{amountConfFive,jdbcType=NUMERIC},
+      amount_conf_six = #{amountConfSix,jdbcType=NUMERIC},
+      one_amount_give = #{oneAmountGive,jdbcType=NUMERIC},
+      two_amount_give = #{twoAmountGive,jdbcType=NUMERIC},
+      thr_amount_give = #{thrAmountGive,jdbcType=NUMERIC},
+      four_amount_give = #{fourAmountGive,jdbcType=NUMERIC},
+      five_amount_give = #{fiveAmountGive,jdbcType=NUMERIC},
+      six_amount_give = #{sixAmountGive,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=BIGINT},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

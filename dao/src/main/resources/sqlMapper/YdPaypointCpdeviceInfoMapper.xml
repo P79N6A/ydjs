@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointCpdeviceInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointCpdeviceInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="deviceid" jdbcType="VARCHAR" property="deviceid" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="device_type" jdbcType="VARCHAR" property="deviceType" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, shopid, deviceid, sn, device_type, description, status, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpdevice_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByDeviceId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpdevice_info
+    where deviceid = #{deviceid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBySN" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpdevice_info
+    where sn = #{sn,jdbcType=VARCHAR} and device_type = #{deviceType,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_cpdevice_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpdeviceInfo">
+    insert into yd_paypoint_cpdevice_info (id, name, shopid, deviceid, sn,
+      device_type, description, status, 
+      feature, create_date, modify_date
+      )
+    values (nextval('seq_yd_paypoint_cpdevice_info_id'), #{name,jdbcType=VARCHAR}, #{shopid,jdbcType=VARCHAR}, #{deviceid,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR},
+      #{deviceType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{feature,jdbcType=VARCHAR}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpdeviceInfo">
+    insert into yd_paypoint_cpdevice_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="deviceid != null">
+        deviceid,
+      </if>
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="deviceType != null">
+        device_type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_cpdevice_info_id'),
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpdeviceInfo">
+    update yd_paypoint_cpdevice_info
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpdeviceInfo">
+    update yd_paypoint_cpdevice_info
+    set name = #{name,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

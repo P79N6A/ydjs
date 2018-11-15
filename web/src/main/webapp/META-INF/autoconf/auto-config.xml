@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config description="自动配置">
+
+    <group name="ydsp">
+        <property name="web.encoding" defaultValue="UTF-8" description="默认编码"/>
+        <property name="user.root" />
+        <property name="redis.host" />
+        <property name="redis.port" />
+        <property name="redis.password" />
+        <property name="sms.key"/>
+        <property name="sms.secret"/>
+        <property name="mns.key"/>
+        <property name="mns.secret"/>
+        <property name="mns.endpoint"/>
+        <property name="mq.key"/>
+        <property name="mq.secret"/>
+        <property name="opensearch.key"/>
+        <property name="opensearch.secret"/>
+        <property name="opensearch.host"/>
+        <property name="jdbc.driverClassName" />
+        <property name="jdbc.url" />
+        <property name="jdbc.username" />
+        <property name="jdbc.password" />
+        <property name="jdbc.dialect" />
+        <property name="scheduler.groupId"/>
+        <property name="scheduler.regionName"/>
+        <property name="weixin2b.appid"/>
+        <property name="weixin2b.secret"/>
+        <property name="weixin2b.msgToken"/>
+        <property name="weixin2b.normal.mchid"/>
+        <property name="weixin2b.service.mchid"/>
+        <property name="weixin2c.appid"/>
+        <property name="weixin2c.secret"/>
+        <property name="weixin2c.msgToken"/>
+        <property name="weixinWeb.appid"/>
+        <property name="weixinWeb.secret"/>
+        <property name="weixinOpen.appid"/>
+        <property name="weixinOpen.secret"/>
+        <property name="weixinOpen.msgToken"/>
+        <property name="weixinOpen.symmetricKey"/>
+        <property name="YLPrinter.url" />
+        <property name="YLPrinter.appid" />
+        <property name="YLPrinter.secret" />
+        <property name="FEPrinter.url" />
+        <property name="FEPrinter.user" />
+        <property name="FEPrinter.userKey" />
+        <property name="map.gaode"/>
+        <property name="map.gaode.key"/>
+        <property name="dada.key"/>
+        <property name="dada.secret"/>
+        <property name="dada.sourceid"/>
+        <property name="dada.url"/>
+        <property name="uu.key"/>
+        <property name="uu.secret"/>
+        <property name="uu.url"/>
+        <property name="uu.sourceid"/>
+    </group>
+
+    <script>
+        <generate template="config.properties.vm" destfile="WEB-INF/classes/config.properties" charset="UTF-8" />
+        <generate template="WEB-INF/web.xml" charset="UTF-8" />
+        <generate template="log4j.xml" destfile="WEB-INF/log4j.xml" charset="UTF-8" />
+    </script>
+
+</config>

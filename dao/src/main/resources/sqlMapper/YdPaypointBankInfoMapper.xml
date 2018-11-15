@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointBankInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointBankInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="cart_type" jdbcType="INTEGER" property="cartType" />
+    <result column="yeepay_city_code" jdbcType="VARCHAR" property="yeepayCityCode" />
+    <result column="yeepay_bank_code" jdbcType="VARCHAR" property="yeepayBankCode" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="subbranch_name" jdbcType="VARCHAR" property="subbranchName" />
+    <result column="bank_account_name" jdbcType="VARCHAR" property="bankAccountName" />
+    <result column="bank_account_code" jdbcType="VARCHAR" property="bankAccountCode" />
+    <result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+    <result column="identity_front_img" jdbcType="VARCHAR" property="identityFrontImg" />
+    <result column="identity_back_img" jdbcType="VARCHAR" property="identityBackImg" />
+    <result column="business_licence_img" jdbcType="VARCHAR" property="businessLicenceImg" />
+    <result column="bank_account_licence_img" jdbcType="VARCHAR" property="bankAccountLicenceImg" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, openid, shopid, cart_type, yeepay_city_code, yeepay_bank_code, city, province, 
+    country, mobile, bank_name, subbranch_name, bank_account_name, bank_account_code, 
+    identity_card, identity_front_img, identity_back_img, business_licence_img, bank_account_licence_img, 
+    status, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOpenidAndShopid" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_bank_info
+    where openid = #{openid,jdbcType=VARCHAR} and shopid = #{shopid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointBankInfo">
+    insert into yd_paypoint_bank_info (id, openid, shopid, 
+      cart_type, yeepay_city_code, yeepay_bank_code, 
+      city, province, country, 
+      mobile, bank_name, subbranch_name, 
+      bank_account_name, bank_account_code, identity_card, 
+      identity_front_img, identity_back_img, business_licence_img, 
+      bank_account_licence_img, status, create_date, 
+      modify_date)
+    values (nextval('seq_yd_paypoint_bank_info_id'), #{openid,jdbcType=VARCHAR}, #{shopid,jdbcType=VARCHAR},
+      #{cartType,jdbcType=INTEGER}, #{yeepayCityCode,jdbcType=VARCHAR}, #{yeepayBankCode,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{subbranchName,jdbcType=VARCHAR}, 
+      #{bankAccountName,jdbcType=VARCHAR}, #{bankAccountCode,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR}, 
+      #{identityFrontImg,jdbcType=VARCHAR}, #{identityBackImg,jdbcType=VARCHAR}, #{businessLicenceImg,jdbcType=VARCHAR}, 
+      #{bankAccountLicenceImg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointBankInfo">
+    insert into yd_paypoint_bank_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null or id == null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="cartType != null">
+        cart_type,
+      </if>
+      <if test="yeepayCityCode != null">
+        yeepay_city_code,
+      </if>
+      <if test="yeepayBankCode != null">
+        yeepay_bank_code,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="subbranchName != null">
+        subbranch_name,
+      </if>
+      <if test="bankAccountName != null">
+        bank_account_name,
+      </if>
+      <if test="bankAccountCode != null">
+        bank_account_code,
+      </if>
+      <if test="identityCard != null">
+        identity_card,
+      </if>
+      <if test="identityFrontImg != null">
+        identity_front_img,
+      </if>
+      <if test="identityBackImg != null">
+        identity_back_img,
+      </if>
+      <if test="businessLicenceImg != null">
+        business_licence_img,
+      </if>
+      <if test="bankAccountLicenceImg != null">
+        bank_account_licence_img,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null or id == null">
+        nextval('seq_yd_paypoint_bank_info_id'),
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="cartType != null">
+        #{cartType,jdbcType=INTEGER},
+      </if>
+      <if test="yeepayCityCode != null">
+        #{yeepayCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayBankCode != null">
+        #{yeepayBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="subbranchName != null">
+        #{subbranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null">
+        #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCode != null">
+        #{bankAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identityFrontImg != null">
+        #{identityFrontImg,jdbcType=VARCHAR},
+      </if>
+      <if test="identityBackImg != null">
+        #{identityBackImg,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceImg != null">
+        #{businessLicenceImg,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountLicenceImg != null">
+        #{bankAccountLicenceImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointBankInfo">
+    update yd_paypoint_bank_info
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="cartType != null">
+        cart_type = #{cartType,jdbcType=INTEGER},
+      </if>
+      <if test="yeepayCityCode != null">
+        yeepay_city_code = #{yeepayCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayBankCode != null">
+        yeepay_bank_code = #{yeepayBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="subbranchName != null">
+        subbranch_name = #{subbranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null">
+        bank_account_name = #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCode != null">
+        bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        identity_card = #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identityFrontImg != null">
+        identity_front_img = #{identityFrontImg,jdbcType=VARCHAR},
+      </if>
+      <if test="identityBackImg != null">
+        identity_back_img = #{identityBackImg,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceImg != null">
+        business_licence_img = #{businessLicenceImg,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountLicenceImg != null">
+        bank_account_licence_img = #{bankAccountLicenceImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointBankInfo">
+    update yd_paypoint_bank_info
+    set openid = #{openid,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=VARCHAR},
+      cart_type = #{cartType,jdbcType=INTEGER},
+      yeepay_city_code = #{yeepayCityCode,jdbcType=VARCHAR},
+      yeepay_bank_code = #{yeepayBankCode,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      subbranch_name = #{subbranchName,jdbcType=VARCHAR},
+      bank_account_name = #{bankAccountName,jdbcType=VARCHAR},
+      bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+      identity_card = #{identityCard,jdbcType=VARCHAR},
+      identity_front_img = #{identityFrontImg,jdbcType=VARCHAR},
+      identity_back_img = #{identityBackImg,jdbcType=VARCHAR},
+      business_licence_img = #{businessLicenceImg,jdbcType=VARCHAR},
+      bank_account_licence_img = #{bankAccountLicenceImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

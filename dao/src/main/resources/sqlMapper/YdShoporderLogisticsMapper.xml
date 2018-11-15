@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShoporderLogisticsMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShoporderLogistics">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="lgcode" jdbcType="VARCHAR" property="lgcode" />
+    <result column="driver_name" jdbcType="VARCHAR" property="driverName" />
+    <result column="driver_jobnum" jdbcType="VARCHAR" property="driverJobnum" />
+    <result column="driver_mobile" jdbcType="VARCHAR" property="driverMobile" />
+    <result column="lgcompany" jdbcType="VARCHAR" property="lgcompany" />
+    <result column="lgcompanycode" jdbcType="VARCHAR" property="lgcompanycode" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="lgtype" jdbcType="INTEGER" property="lgtype" />
+    <result column="amount" jdbcType="NUMERIC" property="amount" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orderid, lgcode, driver_name, driver_jobnum, driver_mobile, lgcompany, lgcompanycode, 
+    state, lgtype, amount, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shoporder_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shoporder_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShoporderLogistics">
+    insert into yd_shoporder_logistics (id, orderid, lgcode, 
+      driver_name, driver_jobnum, driver_mobile, 
+      lgcompany, lgcompanycode, state, 
+      lgtype, amount, feature, 
+      create_date, modify_date)
+    values (nextval('seq_yd_shoporder_logistics_id'), #{orderid,jdbcType=VARCHAR}, #{lgcode,jdbcType=VARCHAR},
+      #{driverName,jdbcType=VARCHAR}, #{driverJobnum,jdbcType=VARCHAR}, #{driverMobile,jdbcType=VARCHAR}, 
+      #{lgcompany,jdbcType=VARCHAR}, #{lgcompanycode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{lgtype,jdbcType=INTEGER}, #{amount,jdbcType=NUMERIC}, #{feature,jdbcType=VARCHAR}, 
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShoporderLogistics">
+    insert into yd_shoporder_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="lgcode != null">
+        lgcode,
+      </if>
+      <if test="driverName != null">
+        driver_name,
+      </if>
+      <if test="driverJobnum != null">
+        driver_jobnum,
+      </if>
+      <if test="driverMobile != null">
+        driver_mobile,
+      </if>
+      <if test="lgcompany != null">
+        lgcompany,
+      </if>
+      <if test="lgcompanycode != null">
+        lgcompanycode,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="lgtype != null">
+        lgtype,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shoporder_logistics_id'),
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcode != null">
+        #{lgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverJobnum != null">
+        #{driverJobnum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverMobile != null">
+        #{driverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcompany != null">
+        #{lgcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcompanycode != null">
+        #{lgcompanycode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="lgtype != null">
+        #{lgtype,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShoporderLogistics">
+    update yd_shoporder_logistics
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcode != null">
+        lgcode = #{lgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        driver_name = #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverJobnum != null">
+        driver_jobnum = #{driverJobnum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverMobile != null">
+        driver_mobile = #{driverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcompany != null">
+        lgcompany = #{lgcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="lgcompanycode != null">
+        lgcompanycode = #{lgcompanycode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="lgtype != null">
+        lgtype = #{lgtype,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShoporderLogistics">
+    update yd_shoporder_logistics
+    set orderid = #{orderid,jdbcType=VARCHAR},
+      lgcode = #{lgcode,jdbcType=VARCHAR},
+      driver_name = #{driverName,jdbcType=VARCHAR},
+      driver_jobnum = #{driverJobnum,jdbcType=VARCHAR},
+      driver_mobile = #{driverMobile,jdbcType=VARCHAR},
+      lgcompany = #{lgcompany,jdbcType=VARCHAR},
+      lgcompanycode = #{lgcompanycode,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      lgtype = #{lgtype,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=NUMERIC},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+       ">
+
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.yd.ydsp" />
+
+    <bean id="redisManager" class="com.yd.ydsp.common.redis.RedisManager" init-method="init">
+        <property name="host" value="127.0.0.1"/>
+        <property name="port" value="6379"/>
+        <property name="expire" value="1800"/>
+        <!-- optional properties:
+          <property name="timeout" value="10000"/>service-beans.xml
+          <property name="password" value="123456"/>
+          -->
+    </bean>
+
+    <bean id="userSessionService" class="com.yd.ydsp.biz.sso.impl.UserSessionServiceImpl"/>
+
+    <bean
+            id="doMapper"
+
+            class="org.dozer.DozerBeanMapper">
+
+        <!--<property name="mappingFiles">-->
+
+            <!--<list>-->
+
+                <!--<value>classpath:mapping/dozer-mapping.xml</value>-->
+
+            <!--</list>-->
+
+        <!--</property>-->
+
+    </bean>
+
+
+    <!--<import resource="../spring/bean-test.xml" />-->
+
+    <!--<bean id="userinfoService" class="com.yd.ydsp.biz.user.impl.UserinfoServiceImpl"/>-->
+
+
+</beans>

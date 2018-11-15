@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://www.springframework.org/schema/context  
+       http://www.springframework.org/schema/context/spring-context.xsd  
+       http://www.springframework.org/schema/tx  
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd  
+       ">
+
+    <context:annotation-config />
+    <!-- 引入jdbc配置文件 -->
+    <!--<context:property-placeholder location="classpath:config/jdbc.properties"/>-->
+
+    <!-- 数据源配置 -->
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}" >
+        <property name="initialSize" value="1" /> <!-- 初始化连接大小 -->
+        <property name="maxTotal" value="30" />
+        <property name="maxWaitMillis" value="60000" />
+        <property name="maxIdle" value="20" /><!-- 连接池最大空闲 -->
+        <property name="minIdle" value="5" /><!-- 连接池最小空闲 -->
+        <property name="removeAbandonedOnBorrow" value="true" /><!-- 自动清除无用连接 -->
+        <property name="removeAbandonedTimeout" value="180" /><!-- 清除无用连接的等待时间 -->
+        <property name="validationQueryTimeout" value="1"/>
+        <!-- 连接属性 -->
+        <property name="connectionProperties" >
+            <value>clientEncoding=UTF-8</value>
+        </property>
+
+    </bean>
+
+    <!-- mybatis文件配置，扫描所有mapper文件 -->
+    <!-- configLocation为mybatis属性 mapperLocations为所有mapper-->
+    <!--<bean id="sqlSessionFactory"-->
+          <!--class="org.mybatis.spring.SqlSessionFactoryBean"-->
+          <!--p:dataSource-ref="dataSource"-->
+          <!--p:configLocation="classpath:mybatis/myBatisSettings.xml"-->
+          <!--p:mapperLocations="classpath:sqlMapper/*.xml"-->
+            <!--/>-->
+
+    <!-- define the SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="com.yd.ydsp.*.entity" />
+        <property name="configLocation" value="classpath:mybatis/myBatisSettings.xml" />
+        <!--自定义typeHandlers加下面这一句-->
+        <!--<property name="typeHandlersPackage" value="com.yd.ydsp.dal.mybatis" />-->
+        <!--  <property name="mapperLocations" value="classpath:mybatis/sqlMapper/*.xml"/>-->
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:com/yd/ydsp/dal/mapper/*.xml</value>
+                <value>classpath:sqlMapper/*Mapper.xml</value>
+            </array>
+        </property>
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.yd.ydsp.dal.mapper,com.yd.ydsp.dal.entity" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 定义SqlSessionTemplate组件来整合spring和mybatis -->
+    <bean id="sqlSessionTemplate"
+          class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="BATCH" />
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- 使用annotation注解方式配置事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>  

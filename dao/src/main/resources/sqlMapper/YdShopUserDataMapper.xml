@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopUserDataMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopUserData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_source" jdbcType="INTEGER" property="userSource" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="point_total" jdbcType="BIGINT" property="pointTotal" />
+    <result column="cur_point" jdbcType="BIGINT" property="curPoint" />
+    <result column="recharge_amount" jdbcType="NUMERIC" property="rechargeAmount" />
+    <result column="last_enter_shop_time" jdbcType="TIMESTAMP" property="lastEnterShopTime" />
+    <result column="amount_total" jdbcType="NUMERIC" property="amountTotal" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_source, userid, shopid, point_total, cur_point, recharge_amount, last_enter_shop_time, 
+    amount_total, status, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shop_user_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_user_data
+    where userid = #{userid,jdbcType=BIGINT} and user_source = #{userSource,jdbcType=BIGINT} and shopid = #{shopid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserIdRowLock" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_user_data
+    where userid = #{userid,jdbcType=BIGINT} and user_source = #{userSource,jdbcType=BIGINT} and shopid = #{shopid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_user_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopUserData">
+    insert into yd_shop_user_data (id, user_source, userid, 
+      shopid, point_total, cur_point, 
+      recharge_amount, last_enter_shop_time, amount_total, 
+      status, create_date, modify_date
+      )
+    values (nextval('seq_yd_shop_user_data_id'), #{userSource,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT},
+      #{shopid,jdbcType=VARCHAR}, #{pointTotal,jdbcType=BIGINT}, #{curPoint,jdbcType=BIGINT}, 
+      #{rechargeAmount,jdbcType=NUMERIC}, #{lastEnterShopTime,jdbcType=TIMESTAMP}, #{amountTotal,jdbcType=NUMERIC}, 
+      #{status,jdbcType=INTEGER}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopUserData">
+    insert into yd_shop_user_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userSource != null">
+        user_source,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="pointTotal != null">
+        point_total,
+      </if>
+      <if test="curPoint != null">
+        cur_point,
+      </if>
+      <if test="rechargeAmount != null">
+        recharge_amount,
+      </if>
+      <if test="lastEnterShopTime != null">
+        last_enter_shop_time,
+      </if>
+      <if test="amountTotal != null">
+        amount_total,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_user_data_id'),
+      </if>
+      <if test="userSource != null">
+        #{userSource,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="pointTotal != null">
+        #{pointTotal,jdbcType=BIGINT},
+      </if>
+      <if test="curPoint != null">
+        #{curPoint,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeAmount != null">
+        #{rechargeAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="lastEnterShopTime != null">
+        #{lastEnterShopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amountTotal != null">
+        #{amountTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopUserData">
+    update yd_shop_user_data
+    <set>
+      <if test="userSource != null">
+        user_source = #{userSource,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="pointTotal != null">
+        point_total = #{pointTotal,jdbcType=BIGINT},
+      </if>
+      <if test="curPoint != null">
+        cur_point = #{curPoint,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeAmount != null">
+        recharge_amount = #{rechargeAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="lastEnterShopTime != null">
+        last_enter_shop_time = #{lastEnterShopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amountTotal != null">
+        amount_total = #{amountTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopUserData">
+    update yd_shop_user_data
+    set user_source = #{userSource,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=BIGINT},
+      shopid = #{shopid,jdbcType=VARCHAR},
+      point_total = #{pointTotal,jdbcType=BIGINT},
+      cur_point = #{curPoint,jdbcType=BIGINT},
+      recharge_amount = #{rechargeAmount,jdbcType=NUMERIC},
+      last_enter_shop_time = #{lastEnterShopTime,jdbcType=TIMESTAMP},
+      amount_total = #{amountTotal,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

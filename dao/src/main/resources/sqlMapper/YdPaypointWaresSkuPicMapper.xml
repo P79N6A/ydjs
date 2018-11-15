@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointWaresSkuPicMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointWaresSkuPic">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="skuid" jdbcType="VARCHAR" property="skuid" />
+    <result column="sn" jdbcType="INTEGER" property="sn" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="pic_type" jdbcType="INTEGER" property="picType" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, skuid, sn, pic_url, pic_type,is_delete, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_wares_sku_pic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectPicDetailBySkuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_wares_sku_pic
+    where skuid = #{skuid,jdbcType=VARCHAR} and pic_type=0 and is_delete=0 order by sn
+  </select>
+
+  <select id="selectBySkuidAndPicType" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_wares_sku_pic
+    where skuid = #{skuid,jdbcType=VARCHAR} and pic_type=#{picType,jdbcType=INTEGER} and is_delete=0 order by sn
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_wares_sku_pic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuPic">
+    insert into yd_paypoint_wares_sku_pic (id, skuid, sn, is_delete,
+      pic_url, pic_type, create_date, 
+      modify_date)
+    values (nextval('seq_yd_paypoint_wares_sku_pic_id'), #{skuid,jdbcType=VARCHAR}, #{sn,jdbcType=INTEGER},#{isDelete,jdbcType=INTEGER},
+      #{picUrl,jdbcType=VARCHAR}, #{picType,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuPic">
+    insert into yd_paypoint_wares_sku_pic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="skuid != null">
+        skuid,
+      </if>
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="picType != null">
+        pic_type,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_wares_sku_pic_id'),
+      </if>
+      <if test="skuid != null">
+        #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        #{sn,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null">
+        #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuPic">
+    update yd_paypoint_wares_sku_pic
+    <set>
+      <if test="skuid != null">
+        skuid = #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        sn = #{sn,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null">
+        pic_type = #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuPic">
+    update yd_paypoint_wares_sku_pic
+    set skuid = #{skuid,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      pic_type = #{picType,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

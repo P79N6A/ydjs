@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<!-- 映射 '/' 的路径请求到'home'视图 -->
+	<!--<mvc:view-controller path="/" view-name="index"/>-->
+
+	<context:annotation-config/>
+	<mvc:annotation-driven/>
+	<context:component-scan base-package="com.yd.ydsp.web.controllers"/>
+
+	<mvc:interceptors>
+		<mvc:interceptor><!--配置局部拦截器，需要满足下列路径条件-->
+			<mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <!--<mvc:exclude-mapping path="/test/adduser"/>-->
+			<mvc:exclude-mapping path="/account/*"/><!--在home中定义了无须登陆的方法请求，直接过滤拦截-->
+			<!--<mvc:exclude-mapping path="/wex/*"/>-->
+			<mvc:exclude-mapping path="/test/*"/><!--用于测试-->
+			<!--<mvc:exclude-mapping path="/paypoint/cpuserinfo/*"/>-->
+			<mvc:exclude-mapping path="/paypoint/agent/apply/*"/><!--网站首页代理商申请信息，不需要登录-->
+			<mvc:exclude-mapping path="/paypoint/shop/public/*"/><!--店铺公开信息-->
+			<mvc:exclude-mapping path="/paypoint/cp/public/*"/><!--合作商操作相关的公开信息-->
+			<mvc:exclude-mapping path="/sys/address/*"/><!--地址系统服务-->
+			<mvc:exclude-mapping path="/paypoint/aliyun/*"/><!--阿里云健康检查 -->
+			<mvc:exclude-mapping path="/monitor/manager/*"/><!--公共监控平台不要权限-->
+			<mvc:exclude-mapping path="/yd/manager/login/*"/><!--小二登录不要拦截-->
+			<mvc:exclude-mapping path="/yd/agent/login/*"/><!--加盟商登录不要拦截-->
+			<mvc:exclude-mapping path="/yd/agent/public/*"/><!--加盟商修改密码不要拦截-->
+			<mvc:exclude-mapping path="/yd/vg/*"/><!--微光通道-->
+			<bean class="com.yd.ydsp.web.auth.AuthInterceptor"/><!--自定义拦截器注册-->
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopUserCashRechargeMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopUserCashRecharge">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="billid" jdbcType="VARCHAR" property="billid" />
+    <result column="billtype" jdbcType="INTEGER" property="billtype" />
+    <result column="cash_amount" jdbcType="NUMERIC" property="cashAmount" />
+    <result column="in_year" jdbcType="VARCHAR" property="inYear" />
+    <result column="in_month" jdbcType="VARCHAR" property="inMonth" />
+    <result column="in_day" jdbcType="VARCHAR" property="inDay" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, userid, billid, billtype, cash_amount, in_year, in_month, in_day, status, 
+    flag, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shop_user_cash_recharge
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByBillId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_user_cash_recharge
+    where billid = #{billid,jdbcType=VARCHAR} and billtype = #{billtype,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_user_cash_recharge
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopUserCashRecharge">
+    insert into yd_shop_user_cash_recharge (id, shopid, userid, 
+      billid, billtype, cash_amount, 
+      in_year, in_month, in_day, 
+      status, flag, feature, 
+      create_date, modify_date)
+    values (nextval('seq_yd_shop_user_cash_recharge_id'), #{shopid,jdbcType=VARCHAR}, #{userid,jdbcType=BIGINT},
+      #{billid,jdbcType=VARCHAR}, #{billtype,jdbcType=INTEGER}, #{cashAmount,jdbcType=NUMERIC}, 
+      #{inYear,jdbcType=VARCHAR}, #{inMonth,jdbcType=VARCHAR}, #{inDay,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{flag,jdbcType=BIGINT}, #{feature,jdbcType=VARCHAR}, 
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopUserCashRecharge">
+    insert into yd_shop_user_cash_recharge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="billid != null">
+        billid,
+      </if>
+      <if test="billtype != null">
+        billtype,
+      </if>
+      <if test="cashAmount != null">
+        cash_amount,
+      </if>
+      <if test="inYear != null">
+        in_year,
+      </if>
+      <if test="inMonth != null">
+        in_month,
+      </if>
+      <if test="inDay != null">
+        in_day,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_user_cash_recharge_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="billid != null">
+        #{billid,jdbcType=VARCHAR},
+      </if>
+      <if test="billtype != null">
+        #{billtype,jdbcType=INTEGER},
+      </if>
+      <if test="cashAmount != null">
+        #{cashAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="inYear != null">
+        #{inYear,jdbcType=VARCHAR},
+      </if>
+      <if test="inMonth != null">
+        #{inMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="inDay != null">
+        #{inDay,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopUserCashRecharge">
+    update yd_shop_user_cash_recharge
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="billid != null">
+        billid = #{billid,jdbcType=VARCHAR},
+      </if>
+      <if test="billtype != null">
+        billtype = #{billtype,jdbcType=INTEGER},
+      </if>
+      <if test="cashAmount != null">
+        cash_amount = #{cashAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="inYear != null">
+        in_year = #{inYear,jdbcType=VARCHAR},
+      </if>
+      <if test="inMonth != null">
+        in_month = #{inMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="inDay != null">
+        in_day = #{inDay,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopUserCashRecharge">
+    update yd_shop_user_cash_recharge
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=BIGINT},
+      billid = #{billid,jdbcType=VARCHAR},
+      billtype = #{billtype,jdbcType=INTEGER},
+      cash_amount = #{cashAmount,jdbcType=NUMERIC},
+      in_year = #{inYear,jdbcType=VARCHAR},
+      in_month = #{inMonth,jdbcType=VARCHAR},
+      in_day = #{inDay,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=BIGINT},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

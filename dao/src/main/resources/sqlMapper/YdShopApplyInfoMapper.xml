@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopApplyInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopApplyInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="applyid" jdbcType="VARCHAR" property="applyid" />
+    <result column="public_appid" jdbcType="VARCHAR" property="publicAppid" />
+    <result column="small_appid" jdbcType="VARCHAR" property="smallAppid" />
+    <result column="agentid" jdbcType="VARCHAR" property="agentid" />
+    <result column="shop_img" jdbcType="VARCHAR" property="shopImg" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="corporation" jdbcType="VARCHAR" property="corporation" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="owner_identification_card" jdbcType="VARCHAR" property="ownerIdentificationCard" />
+    <result column="identification_card_img1" jdbcType="VARCHAR" property="identificationCardImg1" />
+    <result column="identification_card_img2" jdbcType="VARCHAR" property="identificationCardImg2" />
+    <result column="business_code" jdbcType="VARCHAR" property="businessCode" />
+    <result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+    <result column="business_license_img" jdbcType="VARCHAR" property="businessLicenseImg" />
+    <result column="weixin_auth_file" jdbcType="VARCHAR" property="weixinAuthFile" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="zipcode" jdbcType="VARCHAR" property="zipcode" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="trade_type" jdbcType="INTEGER" property="tradeType" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="contract_time_begin" jdbcType="TIMESTAMP" property="contractTimeBegin" />
+    <result column="contract_time_end" jdbcType="TIMESTAMP" property="contractTimeEnd" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, applyid, public_appid, small_appid, agentid, shop_img, name, corporation, contact,
+    mobile, telephone, owner_identification_card, identification_card_img1, identification_card_img2, 
+    business_code, business_license, business_license_img, weixin_auth_file, address, zipcode, district,
+    city, province, country, longitude, latitude, description, trade_type, email, status, 
+    contract_time_begin, contract_time_end, feature, flag, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shop_apply_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByApplyid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_apply_info
+    where applyid = #{applyid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByApplyidRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_apply_info
+    where applyid = #{applyid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectByAgentid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_apply_info
+    where agentid = #{agentid,jdbcType=VARCHAR} order by id desc
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from yd_shop_apply_info
+        order by id desc
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_apply_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopApplyInfo">
+    insert into yd_shop_apply_info (id, applyid, public_appid,
+      small_appid, agentid, shop_img, 
+      name, corporation, contact, 
+      mobile, telephone, owner_identification_card, 
+      identification_card_img1, identification_card_img2, 
+      business_code, business_license, business_license_img, weixin_auth_file,
+      address, zipcode, district, 
+      city, province, country, 
+      longitude, latitude, description, 
+      trade_type, email, status, 
+      contract_time_begin, contract_time_end, 
+      feature, flag, create_date, modify_date
+      )
+    values (nextval('seq_yd_shop_apply_info_id'), #{applyid,jdbcType=VARCHAR}, #{publicAppid,jdbcType=VARCHAR},
+      #{smallAppid,jdbcType=VARCHAR}, #{agentid,jdbcType=VARCHAR}, #{shopImg,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{corporation,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{ownerIdentificationCard,jdbcType=VARCHAR}, 
+      #{identificationCardImg1,jdbcType=VARCHAR}, #{identificationCardImg2,jdbcType=VARCHAR}, 
+      #{businessCode,jdbcType=VARCHAR}, #{businessLicense,jdbcType=VARCHAR}, #{businessLicenseImg,jdbcType=VARCHAR}, #{weixinAuthFile,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{tradeType,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{contractTimeBegin,jdbcType=TIMESTAMP}, #{contractTimeEnd,jdbcType=TIMESTAMP}, 
+      #{feature,jdbcType=VARCHAR}, #{flag,jdbcType=BIGINT}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopApplyInfo">
+    insert into yd_shop_apply_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applyid != null">
+        applyid,
+      </if>
+      <if test="publicAppid != null">
+        public_appid,
+      </if>
+      <if test="smallAppid != null">
+        small_appid,
+      </if>
+      <if test="agentid != null">
+        agentid,
+      </if>
+      <if test="shopImg != null">
+        shop_img,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="corporation != null">
+        corporation,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card,
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1,
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2,
+      </if>
+      <if test="businessCode != null">
+        business_code,
+      </if>
+      <if test="businessLicense != null">
+        business_license,
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img,
+      </if>
+      <if test="weixinAuthFile != null">
+        weixin_auth_file,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="zipcode != null">
+        zipcode,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="contractTimeBegin != null">
+        contract_time_begin,
+      </if>
+      <if test="contractTimeEnd != null">
+        contract_time_end,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_apply_info_id'),
+      </if>
+      <if test="applyid != null">
+        #{applyid,jdbcType=VARCHAR},
+      </if>
+      <if test="publicAppid != null">
+        #{publicAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="smallAppid != null">
+        #{smallAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null">
+        #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="corporation != null">
+        #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null">
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAuthFile != null">
+        #{weixinAuthFile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="contractTimeBegin != null">
+        #{contractTimeBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractTimeEnd != null">
+        #{contractTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopApplyInfo">
+    update yd_shop_apply_info
+    <set>
+      <if test="applyid != null">
+        applyid = #{applyid,jdbcType=VARCHAR},
+      </if>
+      <if test="publicAppid != null">
+        public_appid = #{publicAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="smallAppid != null">
+        small_appid = #{smallAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        agentid = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null">
+        shop_img = #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="corporation != null">
+        corporation = #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null">
+        business_code = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAuthFile != null">
+        weixin_auth_file = #{weixinAuthFile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="contractTimeBegin != null">
+        contract_time_begin = #{contractTimeBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractTimeEnd != null">
+        contract_time_end = #{contractTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopApplyInfo">
+    update yd_shop_apply_info
+    set applyid = #{applyid,jdbcType=VARCHAR},
+      public_appid = #{publicAppid,jdbcType=VARCHAR},
+      small_appid = #{smallAppid,jdbcType=VARCHAR},
+      agentid = #{agentid,jdbcType=VARCHAR},
+      shop_img = #{shopImg,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      corporation = #{corporation,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      business_code = #{businessCode,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      weixin_auth_file = #{weixinAuthFile,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      trade_type = #{tradeType,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      contract_time_begin = #{contractTimeBegin,jdbcType=TIMESTAMP},
+      contract_time_end = #{contractTimeEnd,jdbcType=TIMESTAMP},
+      feature = #{feature,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIGINT},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

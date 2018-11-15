@@ -1,0 +1,60 @@
+package com.yd.ydsp.common.enums.monitor;
+
+/**
+ * @author zengyixun
+ * @date 17/11/27
+ */
+public enum MonitorBaseAddressTypeEnum {
+    /**
+     * HLS流畅直播地址
+     */
+    HLS("hls", 0),
+    /**
+     * HLS高清直播地址
+     */
+    HLSHD("hlsHd", 1),
+    /**
+     * RTMP流畅直播地址
+     */
+    RTMP("rtmp", 2),
+    /**
+     * RTMP高清直播地址
+     */
+    RTMPHD("rtmpHd", 3),
+    ;
+
+    public String name;
+
+    public Integer status;
+
+    MonitorBaseAddressTypeEnum(String name, Integer status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public static Integer getStatusByName(String name) {
+        Integer status = null;
+        for (MonitorBaseAddressTypeEnum compareEnum : MonitorBaseAddressTypeEnum.values()) {
+            if (compareEnum.getName().equals(name)) {
+                status = compareEnum.getStatus();
+            }
+        }
+        return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+}

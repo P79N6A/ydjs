@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopPageInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="pageid" jdbcType="VARCHAR" property="pageid" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="page_type" jdbcType="INTEGER" property="pageType" />
+    <result column="components" jdbcType="VARCHAR" property="components" />
+    <result column="components_release" jdbcType="VARCHAR" property="componentsRelease" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, pageid, page_name, page_type, components, flag, feature, status, create_date, 
+    modify_date
+  </sql>
+
+  <sql id="Base_Column_release_List">
+    id, shopid, pageid, page_name, page_type, components_release AS components, flag, feature, status, create_date,
+    modify_date
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKeyRelease" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_release_List" />
+    from yd_shop_page_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPageId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where pageid = #{pageid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByShopIdAndName" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and page_name = #{pageName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPageIdRelease" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_release_List" />
+    from yd_shop_page_info
+    where pageid = #{pageid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPageIdRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where pageid = #{pageid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectByPageIdReleaseRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_release_List" />
+    from yd_shop_page_info
+    where pageid = #{pageid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectByShopId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where shopid = #{shopid,jdbcType=VARCHAR} ORDER BY modify_date desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByShopIdAndStatus" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_page_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and status = #{status,jdbcType=INTEGER} ORDER BY modify_date desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_page_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    insert into yd_shop_page_info (id, shopid, pageid, 
+      page_name, page_type, components, 
+      flag, feature, status, 
+      create_date, modify_date)
+    values (nextval('seq_yd_shop_page_info_id'), #{shopid,jdbcType=VARCHAR}, #{pageid,jdbcType=VARCHAR},
+      #{pageName,jdbcType=VARCHAR}, #{pageType,jdbcType=INTEGER}, #{components,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=BIGINT}, #{feature,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    insert into yd_shop_page_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="pageid != null">
+        pageid,
+      </if>
+      <if test="pageName != null">
+        page_name,
+      </if>
+      <if test="pageType != null">
+        page_type,
+      </if>
+      <if test="components != null">
+        components,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_page_info_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageid != null">
+        #{pageid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null">
+        #{pageType,jdbcType=INTEGER},
+      </if>
+      <if test="components != null">
+        #{components,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    update yd_shop_page_info
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageid != null">
+        pageid = #{pageid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        page_name = #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null">
+        page_type = #{pageType,jdbcType=INTEGER},
+      </if>
+      <if test="components != null">
+        components = #{components,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelectiveRelease" parameterType="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    update yd_shop_page_info
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageid != null">
+        pageid = #{pageid,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        page_name = #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null">
+        page_type = #{pageType,jdbcType=INTEGER},
+      </if>
+      <if test="components != null">
+        components_release = #{components,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopPageInfo">
+    update yd_shop_page_info
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      pageid = #{pageid,jdbcType=VARCHAR},
+      page_name = #{pageName,jdbcType=VARCHAR},
+      page_type = #{pageType,jdbcType=INTEGER},
+      components = #{components,jdbcType=VARCHAR},
+      components_release = #{components,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIGINT},
+      feature = #{feature,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

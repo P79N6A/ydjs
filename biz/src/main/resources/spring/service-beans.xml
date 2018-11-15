@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.3.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.yd.ydsp" />
+
+
+    <bean id="redisManager" class="com.yd.ydsp.common.redis.RedisManager" init-method="init" destroy-method="destroy">
+        <property name="host" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" value="${redis.password}"/>
+        <property name="expire" value="1800"/>
+        <property name="timeout" value="10000"/>
+    </bean>
+
+    <!--&lt;!&ndash; 池化 &ndash;&gt;-->
+    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
+        <!--<property-->
+                <!--name="maxTotal"-->
+                <!--value="20" />-->
+        <!--<property-->
+                <!--name="maxIdle"-->
+                <!--value="3" />-->
+        <!--<property-->
+                <!--name="maxWaitMillis"-->
+                <!--value="1000" />-->
+        <!--<property-->
+                <!--name="testOnBorrow"-->
+                <!--value="true" />-->
+    <!--</bean>-->
+
+    <!--<bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.password}" p:usePool="true" p:poolConfig-ref="jedisPoolConfig" />-->
+
+    <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">-->
+        <!--<property name="connectionFactory" ref="redisConnectionFactory"></property>-->
+    <!--</bean>-->
+    <!--<bean id="jdkSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />-->
+    <!--<bean id="messageDelegateListener" class="com.yd.ydsp.biz.message.MessageDelegateListener"/>-->
+    <!--<bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">-->
+        <!--<property name="delegate" ref="messageDelegateListener" />-->
+        <!--<property name="serializer" ref="jdkSerializer" />-->
+    <!--</bean>-->
+
+    <!--<redis:listener-container>-->
+        <!--<redis:listener ref="messageListener" method="handleMessage" serializer="jdkSerializer" topic="java"/>-->
+    <!--</redis:listener-container>-->
+
+    <!--<bean id="sendMessage" class="com.yd.ydsp.biz.message.SendMessage"/>-->
+
+    <bean id="userSessionService" class="com.yd.ydsp.biz.sso.impl.UserSessionServiceImpl"/>
+
+    <bean
+            id="doMapper"
+
+            class="org.dozer.DozerBeanMapper">
+
+        <!--<property name="mappingFiles">-->
+
+            <!--<list>-->
+
+                <!--<value>classpath:mapping/dozer-mapping.xml</value>-->
+
+            <!--</list>-->
+
+        <!--</property>-->
+
+    </bean>
+
+    <!--配置SchedulerXClient-->
+    <bean id="schedulerXClient" class="com.alibaba.edas.schedulerX.SchedulerXClient" init-method="init">
+
+        <property name="groupId" value="${scheduler.groupId}"/>
+        <property name="regionName" value="${scheduler.regionName}"/>
+    </bean>
+
+    <!--线程池配置-->
+    <!-- spring thread pool executor -->
+    <!-- 等价于 @EnableAsync， executor指定线程池 -->
+    <task:annotation-driven executor="taskExecutor"/>
+    <!-- id指定线程池产生线程名称的前缀 -->
+    <!--
+    rejection-policy：当pool已经达到max size的时候，如何处理新任务
+    ABORT（缺省）：抛出TaskRejectedException异常，然后不执行
+    DISCARD：不执行，也不抛出异常
+    DISCARD_OLDEST：丢弃queue中最旧的那个任务
+    CALLER_RUNS：不在新线程中执行任务，而是有调用者所在的线程来执行
+    keep-alive：超过core size的那些线程，任务完成后，再经过这个时长（秒）会被结束掉
+-->
+    <task:executor
+            id="taskExecutor"
+            pool-size="3-10"
+            queue-capacity="50"
+            keep-alive="15"
+            rejection-policy="ABORT"/>
+
+    <bean class="com.yd.ydsp.biz.config.DiamondYdSystemConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYdPayPointConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYdShopConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYDGoodsConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYDdeliveryConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondWeiXinInfoConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYdAgentConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYdXiaoerConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondYdWareConfig" init-method="init"/>
+    <bean class="com.yd.ydsp.biz.config.DiamondReleaseConfig" init-method="init"/>
+
+    <bean id="producerMq" class="com.aliyun.openservices.ons.api.bean.ProducerBean" init-method="start"
+          destroy-method="shutdown">
+        <property name="properties"> <!--生产者配置信息-->
+            <props>
+                <prop key="ProducerId">PID_YDMQ</prop> <!--请替换为自己的账户信息-->
+                <prop key="AccessKey">${mq.key}</prop>
+                <prop key="SecretKey">${mq.secret}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="producerOrderMq" class="com.aliyun.openservices.ons.api.bean.OrderProducerBean" init-method="start"
+          destroy-method="shutdown">
+        <property name="properties"> <!--生产者配置信息-->
+            <props>
+                <prop key="ProducerId">PID_YDORDER</prop> <!--请替换为自己的账户信息-->
+                <prop key="AccessKey">${mq.key}</prop>
+                <prop key="SecretKey">${mq.secret}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="ydPayMsgListener" class="com.yd.ydsp.biz.message.mq.OrderMsgListener"/> <!--Listener配置，旧的扫码点餐订单处理-->
+    <bean id="weiXinConsumeMsgListener" class="com.yd.ydsp.biz.message.mq.WeiXinConsumeMsgListener"/> <!--Listener配置-->
+    <bean id="shopOrderMsgListener" class="com.yd.ydsp.biz.message.mq.ShopOrderMsgListener"/><!--Listener配置 新的订单消息处理-->
+
+    <bean id="shopOrderMq" class="com.aliyun.openservices.ons.api.bean.OrderConsumerBean" init-method="start"
+          destroy-method="shutdown">
+        <property name="properties"> <!--消费者配置信息-->
+            <props>
+                <prop key="ConsumerId">CID_YDORDER</prop> <!--请替换为自己的账户信息-->
+                <prop key="AccessKey">${mq.key}</prop>
+                <prop key="SecretKey">${mq.secret}</prop>
+                <!--将消费者线程数固定为5个-->
+                 <prop key="ConsumeThreadNums">5</prop>
+            </props>
+        </property>
+        <property name="subscriptionTable">
+            <map>
+                <entry value-ref="shopOrderMsgListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            <property name="topic" value="ydorder"/>
+                            <property name="expression" value="orderdelivery||userordernew||userorderupdate||userordertimeout||printmsg||wareupdate||waresell||shopuserbill||updateshopcashrecharge"/>
+                            <!--expression即Tag，可以设置成具体的Tag，如 taga||tagb||tagc，也可设置成*。 *仅代表订阅所有Tag，不支持通配-->
+                        </bean>
+                    </key>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="consumerMq" class="com.aliyun.openservices.ons.api.bean.ConsumerBean" init-method="start"
+          destroy-method="shutdown">
+        <property name="properties"> <!--消费者配置信息-->
+            <props>
+                <prop key="ConsumerId">CID_YDMQ</prop> <!--请替换为自己的账户信息-->
+                <prop key="AccessKey">${mq.key}</prop>
+                <prop key="SecretKey">${mq.secret}</prop>
+                <!--将消费者线程数固定为1个-->
+                <prop key="ConsumeThreadNums">1</prop>
+            </props>
+        </property>
+        <property name="subscriptionTable">
+            <map>
+                <entry value-ref="ydPayMsgListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            <property name="topic" value="ydmq"/>
+                            <property name="expression" value="ydpay||ordertimeout2c||ordertimeoutcp||userordertimeout||micropay"/>
+                            <!--expression即Tag，可以设置成具体的Tag，如 taga||tagb||tagc，也可设置成*。 *仅代表订阅所有Tag，不支持通配-->
+                        </bean>
+                    </key>
+                </entry>
+                <!--<entry value-ref="consumeMsgListener">-->
+                <!--<key>-->
+                <!--<bean class="com.aliyun.openservices.ons.api.bean.Subscription">-->
+                <!--<property name="topic" value="ydmq"/>--><!--订阅另外一个 Topic -->
+                <!--<property name="expression" value="weixinopenmsg||weixinusermsg"/>-->
+                <!--&lt;!&ndash;expression即Tag，可以设置成具体的Tag，如 taga||tagb||tagc，也可设置成*。 *仅代表订阅所有Tag，不支持通配&ndash;&gt;-->
+                <!--</bean>-->
+                <!--</key>-->
+                <!--</entry>-->
+                <!--更多的订阅添加entry节点即可-->
+            </map>
+        </property>
+    </bean>
+
+    <bean id="weiXinConsumerMq" class="com.aliyun.openservices.ons.api.bean.ConsumerBean" init-method="start"
+          destroy-method="shutdown">
+        <property name="properties"> <!--消费者配置信息-->
+            <props>
+                <prop key="ConsumerId">CID_WEIXINMQ</prop> <!--请替换为自己的账户信息-->
+                <prop key="AccessKey">${mq.key}</prop>
+                <prop key="SecretKey">${mq.secret}</prop>
+                <!--将消费者线程数固定为5个-->
+                <prop key="ConsumeThreadNums">5</prop>
+            </props>
+        </property>
+        <property name="subscriptionTable">
+            <map>
+                <entry value-ref="weiXinConsumeMsgListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            <property name="topic" value="ydmq"/>
+                            <property name="expression" value="weixinopenmsg||weixinsamllcode||weixinusermsg||weixinauthshop"/>
+                            <!--expression即Tag，可以设置成具体的Tag，如 taga||tagb||tagc，也可设置成*。 *仅代表订阅所有Tag，不支持通配-->
+                        </bean>
+                    </key>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <import resource="../spring/biz.xml" />
+
+</beans>

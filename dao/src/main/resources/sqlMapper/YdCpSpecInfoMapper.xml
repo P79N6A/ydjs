@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdCpSpecInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdCpSpecInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="specid" jdbcType="VARCHAR" property="specid" />
+    <result column="spec_name" jdbcType="VARCHAR" property="specName" />
+    <result column="spec_type" jdbcType="INTEGER" property="specType" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, specid, spec_name, spec_type, is_delete, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_cp_spec_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByShopid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_spec_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and is_delete=0
+  </select>
+
+  <select id="selectBySpecid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_spec_info
+    where specid = #{specid,jdbcType=VARCHAR} and is_delete=0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_cp_spec_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdCpSpecInfo">
+    insert into yd_cp_spec_info (id, shopid, specid, 
+      spec_name, spec_type, is_delete,
+      feature, create_date, modify_date
+      )
+    values (nextval('seq_yd_cp_spec_info_id'), #{shopid,jdbcType=VARCHAR}, #{specid,jdbcType=VARCHAR},
+      #{specName,jdbcType=VARCHAR}, #{specType,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER},
+      #{feature,jdbcType=VARCHAR}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdCpSpecInfo">
+    insert into yd_cp_spec_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="specid != null">
+        specid,
+      </if>
+      <if test="specName != null">
+        spec_name,
+      </if>
+      <if test="specType != null">
+        spec_type,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_cp_spec_info_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="specid != null">
+        #{specid,jdbcType=VARCHAR},
+      </if>
+      <if test="specName != null">
+        #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="specType != null">
+        #{specType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdCpSpecInfo">
+    update yd_cp_spec_info
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="specid != null">
+        specid = #{specid,jdbcType=VARCHAR},
+      </if>
+      <if test="specName != null">
+        spec_name = #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="specType != null">
+        spec_type = #{specType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdCpSpecInfo">
+    update yd_cp_spec_info
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      specid = #{specid,jdbcType=VARCHAR},
+      spec_name = #{specName,jdbcType=VARCHAR},
+      spec_type = #{specType,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

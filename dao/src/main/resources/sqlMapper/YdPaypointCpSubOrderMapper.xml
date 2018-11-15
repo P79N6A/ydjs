@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointCpSubOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointCpSubOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsid" jdbcType="VARCHAR" property="goodsid" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="sub_orderid" jdbcType="VARCHAR" property="subOrderid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="NUMERIC" property="price" />
+    <result column="amount" jdbcType="NUMERIC" property="amount" />
+    <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goodsid, orderid, sub_orderid, name, price, amount, goods_count, create_date, 
+    modify_date, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpsuborder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpsuborder
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBySubOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_cpsuborder
+    where sub_orderid = #{subOrderid,jdbcType=VARCHAR}
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update yd_paypoint_cpsuborder
+    set modify_date = current_timestamp(0),
+     is_delete = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpSubOrder">
+    insert into yd_paypoint_cpsuborder (id, goodsid, orderid, 
+      sub_orderid, name, price, 
+      amount, goods_count, create_date, 
+      modify_date, is_delete)
+    values (nextval('seq_yd_paypoint_cpsuborder_id'), #{goodsid,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR},
+      #{subOrderid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC},
+      #{amount,jdbcType=NUMERIC}, #{goodsCount,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0), #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpSubOrder">
+    insert into yd_paypoint_cpsuborder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="subOrderid != null">
+        sub_orderid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="goodsCount != null">
+        goods_count,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_cpsuborder_id'),
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="subOrderid != null">
+        #{subOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="goodsCount != null">
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpSubOrder">
+    update yd_paypoint_cpsuborder
+    <set>
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="subOrderid != null">
+        sub_orderid = #{subOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=NUMERIC},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointCpSubOrder">
+    update yd_paypoint_cpsuborder
+    set goodsid = #{goodsid,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      sub_orderid = #{subOrderid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=NUMERIC},
+      amount = #{amount,jdbcType=NUMERIC},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = current_timestamp(0),
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

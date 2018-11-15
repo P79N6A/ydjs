@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdWeixinServiceConfigMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdWeixinServiceConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="authorizer_refresh_token" jdbcType="VARCHAR" property="authorizerRefreshToken" />
+    <result column="expires_in_date" jdbcType="TIMESTAMP" property="expiresInDate" />
+    <result column="weixin_config_id" jdbcType="VARCHAR" property="weixinConfigId" />
+    <result column="weixin_type" jdbcType="INTEGER" property="weixinType" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="secret" jdbcType="VARCHAR" property="secret" />
+    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="msg_token" jdbcType="VARCHAR" property="msgToken" />
+    <result column="encoding_aes_key" jdbcType="VARCHAR" property="encodingAesKey" />
+    <result column="encode_type" jdbcType="INTEGER" property="encodeType" />
+    <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="weixinpay_sub_mch_id" jdbcType="VARCHAR" property="weixinpaySubMchId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, access_token,authorizer_refresh_token,expires_in_date, weixin_config_id, weixin_type, appid, shopid, secret, request_url, msg_token,
+    encoding_aes_key, encode_type, qrcode_url, weixinpay_sub_mch_id, status, feature, 
+    create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_weixin_service_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByAppid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_weixin_service_config
+    where appid = #{appid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByWeixinConfigId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_weixin_service_config
+    where weixin_config_id = #{weixinConfigId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByShopId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_weixin_service_config
+    where shopid = #{shopid,jdbcType=VARCHAR} ORDER BY id DESC
+  </select>
+
+  <select id="selectByShopIdAndType" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_weixin_service_config
+    where shopid = #{shopid,jdbcType=VARCHAR} and weixin_type= #{weixinType,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_weixin_service_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdWeixinServiceConfig">
+    insert into yd_weixin_service_config (id, access_token,authorizer_refresh_token,expires_in_date, weixin_config_id,
+      weixin_type, appid, shopid, secret,
+      request_url, msg_token, encoding_aes_key, 
+      encode_type, qrcode_url, weixinpay_sub_mch_id, 
+      status, feature, create_date, 
+      modify_date)
+    values (nextval('seq_yd_weixin_service_config_id'), #{accessToken,jdbcType=VARCHAR},
+      #{accessToken,jdbcType=VARCHAR},#{authorizerRefreshToken,jdbcType=VARCHAR},#{expiresInDate,jdbcType=TIMESTAMP}, #{weixinConfigId,jdbcType=VARCHAR},
+      #{weixinType,jdbcType=INTEGER}, #{appid,jdbcType=VARCHAR}, #{shopid,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR},
+      #{requestUrl,jdbcType=VARCHAR}, #{msgToken,jdbcType=VARCHAR}, #{encodingAesKey,jdbcType=VARCHAR}, 
+      #{encodeType,jdbcType=INTEGER}, #{qrcodeUrl,jdbcType=VARCHAR}, #{weixinpaySubMchId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{feature,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdWeixinServiceConfig">
+    insert into yd_weixin_service_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="accessToken != null">
+        access_token,
+      </if>
+      <if test="authorizerRefreshToken != null">
+        authorizer_refresh_token,
+      </if>
+      <if test="expiresInDate != null">
+        expires_in_date,
+      </if>
+      <if test="weixinConfigId != null">
+        weixin_config_id,
+      </if>
+      <if test="weixinType != null">
+        weixin_type,
+      </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="secret != null">
+        secret,
+      </if>
+      <if test="requestUrl != null">
+        request_url,
+      </if>
+      <if test="msgToken != null">
+        msg_token,
+      </if>
+      <if test="encodingAesKey != null">
+        encoding_aes_key,
+      </if>
+      <if test="encodeType != null">
+        encode_type,
+      </if>
+      <if test="qrcodeUrl != null">
+        qrcode_url,
+      </if>
+      <if test="weixinpaySubMchId != null">
+        weixinpay_sub_mch_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_weixin_service_config_id'),
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="authorizerRefreshToken != null">
+        #{authorizerRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresInDate != null">
+        #{expiresInDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weixinConfigId != null">
+        #{weixinConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinType != null">
+        #{weixinType,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null">
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="msgToken != null">
+        #{msgToken,jdbcType=VARCHAR},
+      </if>
+      <if test="encodingAesKey != null">
+        #{encodingAesKey,jdbcType=VARCHAR},
+      </if>
+      <if test="encodeType != null">
+        #{encodeType,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null">
+        #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinpaySubMchId != null">
+        #{weixinpaySubMchId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdWeixinServiceConfig">
+    update yd_weixin_service_config
+    <set>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="authorizerRefreshToken != null">
+        authorizer_refresh_token = #{authorizerRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresInDate != null">
+        expires_in_date = #{expiresInDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weixinConfigId != null">
+        weixin_config_id = #{weixinConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinType != null">
+        weixin_type = #{weixinType,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        secret = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="msgToken != null">
+        msg_token = #{msgToken,jdbcType=VARCHAR},
+      </if>
+      <if test="encodingAesKey != null">
+        encoding_aes_key = #{encodingAesKey,jdbcType=VARCHAR},
+      </if>
+      <if test="encodeType != null">
+        encode_type = #{encodeType,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null">
+        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinpaySubMchId != null">
+        weixinpay_sub_mch_id = #{weixinpaySubMchId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdWeixinServiceConfig">
+    update yd_weixin_service_config
+    set access_token = #{accessToken,jdbcType=VARCHAR},
+      authorizer_refresh_token = #{authorizerRefreshToken,jdbcType=VARCHAR},
+      expires_in_date = #{expiresInDate,jdbcType=TIMESTAMP},
+      weixin_config_id = #{weixinConfigId,jdbcType=VARCHAR},
+      weixin_type = #{weixinType,jdbcType=INTEGER},
+      appid = #{appid,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=VARCHAR},
+      secret = #{secret,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      msg_token = #{msgToken,jdbcType=VARCHAR},
+      encoding_aes_key = #{encodingAesKey,jdbcType=VARCHAR},
+      encode_type = #{encodeType,jdbcType=INTEGER},
+      qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      weixinpay_sub_mch_id = #{weixinpaySubMchId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointWaresSkuExtMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointWaresSkuExt">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="skuid" jdbcType="VARCHAR" property="skuid" />
+    <result column="weight" jdbcType="NUMERIC" property="weight" />
+    <result column="volume" jdbcType="VARCHAR" property="volume" />
+    <result column="discount" jdbcType="NUMERIC" property="discount" />
+    <result column="feature4" jdbcType="VARCHAR" property="feature4" />
+    <result column="feature5" jdbcType="VARCHAR" property="feature5" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, skuid, weight, volume, discount, feature4, feature5, feature,
+    create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_wares_sku_ext
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectBySkuId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_wares_sku_ext
+    where skuid = #{skuid,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_wares_sku_ext
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuExt">
+    insert into yd_paypoint_wares_sku_ext (id, skuid, weight, 
+      volume, discount, feature4, feature5,
+      feature, create_date, modify_date
+      )
+    values (nextval('seq_yd_paypoint_wares_sku_ext_id'), #{skuid,jdbcType=VARCHAR}, #{weight,jdbcType=NUMERIC},
+      #{volume,jdbcType=VARCHAR}, #{discount,jdbcType=NUMERIC}, #{feature4,jdbcType=VARCHAR}, #{feature5,jdbcType=VARCHAR},
+      #{feature,jdbcType=VARCHAR}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuExt">
+    insert into yd_paypoint_wares_sku_ext
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="skuid != null">
+        skuid,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="volume != null">
+        volume,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="feature4 != null">
+        feature4,
+      </if>
+      <if test="feature5 != null">
+        feature5,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_wares_sku_ext_id'),
+      </if>
+      <if test="skuid != null">
+        #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=NUMERIC},
+      </if>
+      <if test="volume != null">
+        #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=NUMERIC},
+      </if>
+      <if test="feature4 != null">
+        #{feature4,jdbcType=VARCHAR},
+      </if>
+      <if test="feature5 != null">
+        #{feature5,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuExt">
+    update yd_paypoint_wares_sku_ext
+    <set>
+      <if test="skuid != null">
+        skuid = #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=NUMERIC},
+      </if>
+      <if test="volume != null">
+        volume = #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=NUMERIC},
+      </if>
+      <if test="feature4 != null">
+        feature4 = #{feature4,jdbcType=VARCHAR},
+      </if>
+      <if test="feature5 != null">
+        feature5 = #{feature5,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointWaresSkuExt">
+    update yd_paypoint_wares_sku_ext
+    set skuid = #{skuid,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=NUMERIC},
+      volume = #{volume,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=NUMERIC},
+      feature4 = #{feature4,jdbcType=VARCHAR},
+      feature5 = #{feature5,jdbcType=VARCHAR},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

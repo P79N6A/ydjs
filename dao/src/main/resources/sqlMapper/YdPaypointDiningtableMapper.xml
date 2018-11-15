@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointDiningtableMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointDiningtable">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="tableid" jdbcType="VARCHAR" property="tableid" />
+    <result column="qrcode" jdbcType="VARCHAR" property="qrcode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pnumber" jdbcType="INTEGER" property="pnumber" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, tableid, qrcode, name, pnumber, seq, status, feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_diningtable
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByShopId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_diningtable
+    where shopid = #{shopid,jdbcType=BIGINT} order by id asc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByTableId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_diningtable
+    where tableid = #{tableid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByQrcode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_diningtable
+    where qrcode = #{qrcode,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_diningtable
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointDiningtable">
+    insert into yd_paypoint_diningtable (id, shopid, tableid, 
+      qrcode, name, pnumber, seq,
+      status, feature, create_date, 
+      modify_date)
+    values (nextval('seq_yd_paypoint_diningtable_id'), #{shopid,jdbcType=VARCHAR}, #{tableid,jdbcType=VARCHAR},
+      #{qrcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pnumber,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{feature,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointDiningtable">
+    insert into yd_paypoint_diningtable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="tableid != null">
+        tableid,
+      </if>
+      <if test="qrcode != null">
+        qrcode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="pnumber != null">
+        pnumber,
+      </if>
+      <if test="seq != null">
+        seq,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_diningtable_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="tableid != null">
+        #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcode != null">
+        #{qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pnumber != null">
+        #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointDiningtable">
+    update yd_paypoint_diningtable
+    <set>
+      <if test="qrcode != null">
+        qrcode = #{qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pnumber != null">
+        pnumber = #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null">
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointDiningtable">
+    update yd_paypoint_diningtable
+    set qrcode = #{qrcode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      pnumber = #{pnumber,jdbcType=INTEGER},
+      seq = #{seq,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

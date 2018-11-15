@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="wareitemid" jdbcType="BIGINT" property="wareitemid" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="wareimg" jdbcType="VARCHAR" property="wareimg" />
+    <result column="buy_amount" jdbcType="INTEGER" property="buyAmount" />
+    <result column="price" jdbcType="NUMERIC" property="price" />
+    <result column="total_amount" jdbcType="NUMERIC" property="totalAmount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, wareitemid, ware_name, wareimg, buy_amount, price, total_amount, status, 
+    feature, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointOrder">
+    insert into yd_paypoint_order (id, shopid, wareitemid, 
+      ware_name, wareimg, buy_amount, 
+      price, total_amount, status, 
+      feature, create_date, modify_date
+      )
+    values (nextval('seq_yd_paypoint_order_id'), #{shopid,jdbcType=VARCHAR}, #{wareitemid,jdbcType=BIGINT},
+      #{wareName,jdbcType=VARCHAR}, #{wareimg,jdbcType=VARCHAR}, #{buyAmount,jdbcType=INTEGER}, 
+      #{price,jdbcType=NUMERIC}, #{totalAmount,jdbcType=NUMERIC}, #{status,jdbcType=INTEGER}, 
+      #{feature,jdbcType=VARCHAR}, current_timestamp(0),current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointOrder">
+    insert into yd_paypoint_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="wareitemid != null">
+        wareitemid,
+      </if>
+      <if test="wareName != null">
+        ware_name,
+      </if>
+      <if test="wareimg != null">
+        wareimg,
+      </if>
+      <if test="buyAmount != null">
+        buy_amount,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_order_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="wareitemid != null">
+        #{wareitemid,jdbcType=BIGINT},
+      </if>
+      <if test="wareName != null">
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareimg != null">
+        #{wareimg,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAmount != null">
+        #{buyAmount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointOrder">
+    update yd_paypoint_order
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="wareitemid != null">
+        wareitemid = #{wareitemid,jdbcType=BIGINT},
+      </if>
+      <if test="wareName != null">
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareimg != null">
+        wareimg = #{wareimg,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAmount != null">
+        buy_amount = #{buyAmount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointOrder">
+    update yd_paypoint_order
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      wareitemid = #{wareitemid,jdbcType=BIGINT},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      wareimg = #{wareimg,jdbcType=VARCHAR},
+      buy_amount = #{buyAmount,jdbcType=INTEGER},
+      price = #{price,jdbcType=NUMERIC},
+      total_amount = #{totalAmount,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

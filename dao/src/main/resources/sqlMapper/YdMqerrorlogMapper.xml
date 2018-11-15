@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdMqerrorlogMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdMqerrorlog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="keyid" jdbcType="VARCHAR" property="keyid" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="body" jdbcType="VARCHAR" property="body" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, keyid, tag, body, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_mqerrorlog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_mqerrorlog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdMqerrorlog">
+    insert into yd_mqerrorlog (id, keyid, tag, 
+      body, create_date, modify_date
+      )
+    values (nextval('seq_yd_mqerrorlog_id'), #{keyid,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR},
+      #{body,jdbcType=VARCHAR}, current_timestamp(0), current_timestamp(0)
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdMqerrorlog">
+    insert into yd_mqerrorlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null or id == null">
+        id,
+      </if>
+      <if test="keyid != null">
+        keyid,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null or id == null">
+        nextval('seq_yd_mqerrorlog_id'),
+      </if>
+      <if test="keyid != null">
+        #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdMqerrorlog">
+    update yd_mqerrorlog
+    <set>
+      <if test="keyid != null">
+        keyid = #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdMqerrorlog">
+    update yd_mqerrorlog
+    set keyid = #{keyid,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

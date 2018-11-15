@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdCpMemberCardMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdCpMemberCard">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="cardid" jdbcType="VARCHAR" property="cardid" />
+    <result column="level_name" jdbcType="VARCHAR" property="levelName" />
+    <result column="level_type" jdbcType="INTEGER" property="levelType" />
+    <result column="min_point" jdbcType="INTEGER" property="minPoint" />
+    <result column="max_point" jdbcType="INTEGER" property="maxPoint" />
+    <result column="deduction_point" jdbcType="INTEGER" property="deductionPoint" />
+    <result column="deduction_money" jdbcType="INTEGER" property="deductionMoney" />
+    <result column="acc_point" jdbcType="INTEGER" property="accPoint" />
+    <result column="acc_money" jdbcType="INTEGER" property="accMoney" />
+    <result column="recharge_card_max_money" jdbcType="NUMERIC" property="rechargeCardMaxMoney" />
+    <result column="user_count" jdbcType="BIGINT" property="userCount" />
+    <result column="pay_user_count" jdbcType="BIGINT" property="payUserCount" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, cardid, level_name, level_type, min_point, max_point, deduction_point, 
+    deduction_money, acc_point, acc_money, recharge_card_max_money, user_count, pay_user_count, feature, status,
+    create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_cp_member_card
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByShopid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_member_card
+    where shopid = #{shopid,jdbcType=VARCHAR} ORDER BY id
+  </select>
+
+  <select id="selectByCradid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_member_card
+    where cardid = #{cardid,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_cp_member_card
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdCpMemberCard">
+    insert into yd_cp_member_card (id, shopid, cardid, 
+      level_name, level_type, min_point, 
+      max_point, deduction_point, deduction_money, 
+      acc_point, acc_money, recharge_card_max_money, user_count, pay_user_count,
+      feature, status, create_date, 
+      modify_date)
+    values (nextval('seq_yd_cp_member_card_id'), #{shopid,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR},
+      #{levelName,jdbcType=VARCHAR}, #{levelType,jdbcType=INTEGER}, #{minPoint,jdbcType=INTEGER}, 
+      #{maxPoint,jdbcType=INTEGER}, #{deductionPoint,jdbcType=INTEGER}, #{deductionMoney,jdbcType=INTEGER}, 
+      #{accPoint,jdbcType=INTEGER}, #{accMoney,jdbcType=INTEGER}, #{rechargeCardMaxMoney,jdbcType=NUMERIC}, #{userCount,jdbcType=BIGINT}, #{payUserCount,jdbcType=BIGINT},
+      #{feature,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdCpMemberCard">
+    insert into yd_cp_member_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="cardid != null">
+        cardid,
+      </if>
+      <if test="levelName != null">
+        level_name,
+      </if>
+      <if test="levelType != null">
+        level_type,
+      </if>
+      <if test="minPoint != null">
+        min_point,
+      </if>
+      <if test="maxPoint != null">
+        max_point,
+      </if>
+      <if test="deductionPoint != null">
+        deduction_point,
+      </if>
+      <if test="deductionMoney != null">
+        deduction_money,
+      </if>
+      <if test="accPoint != null">
+        acc_point,
+      </if>
+      <if test="accMoney != null">
+        acc_money,
+      </if>
+      <if test="rechargeCardMaxMoney != null">
+        recharge_card_max_money,
+      </if>
+      <if test="userCount != null">
+        user_count,
+      </if>
+      <if test="payUserCount != null">
+        pay_user_count,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_cp_member_card_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="levelName != null">
+        #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="levelType != null">
+        #{levelType,jdbcType=INTEGER},
+      </if>
+      <if test="minPoint != null">
+        #{minPoint,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoint != null">
+        #{maxPoint,jdbcType=INTEGER},
+      </if>
+      <if test="deductionPoint != null">
+        #{deductionPoint,jdbcType=INTEGER},
+      </if>
+      <if test="deductionMoney != null">
+        #{deductionMoney,jdbcType=INTEGER},
+      </if>
+      <if test="accPoint != null">
+        #{accPoint,jdbcType=INTEGER},
+      </if>
+      <if test="accMoney != null">
+        #{accMoney,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeCardMaxMoney != null">
+        #{rechargeCardMaxMoney,jdbcType=NUMERIC},
+      </if>
+      <if test="userCount != null">
+        #{userCount,jdbcType=BIGINT},
+      </if>
+      <if test="payUserCount != null">
+        #{payUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdCpMemberCard">
+    update yd_cp_member_card
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        cardid = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="levelName != null">
+        level_name = #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="levelType != null">
+        level_type = #{levelType,jdbcType=INTEGER},
+      </if>
+      <if test="minPoint != null">
+        min_point = #{minPoint,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoint != null">
+        max_point = #{maxPoint,jdbcType=INTEGER},
+      </if>
+      <if test="deductionPoint != null">
+        deduction_point = #{deductionPoint,jdbcType=INTEGER},
+      </if>
+      <if test="deductionMoney != null">
+        deduction_money = #{deductionMoney,jdbcType=INTEGER},
+      </if>
+      <if test="accPoint != null">
+        acc_point = #{accPoint,jdbcType=INTEGER},
+      </if>
+      <if test="accMoney != null">
+        acc_money = #{accMoney,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeCardMaxMoney != null">
+        recharge_card_max_money = #{rechargeCardMaxMoney,jdbcType=NUMERIC},
+      </if>
+      <if test="userCount != null">
+        user_count = #{userCount,jdbcType=BIGINT},
+      </if>
+      <if test="payUserCount != null">
+        pay_user_count = #{payUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdCpMemberCard">
+    update yd_cp_member_card
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      cardid = #{cardid,jdbcType=VARCHAR},
+      level_name = #{levelName,jdbcType=VARCHAR},
+      level_type = #{levelType,jdbcType=INTEGER},
+      min_point = #{minPoint,jdbcType=INTEGER},
+      max_point = #{maxPoint,jdbcType=INTEGER},
+      deduction_point = #{deductionPoint,jdbcType=INTEGER},
+      deduction_money = #{deductionMoney,jdbcType=INTEGER},
+      acc_point = #{accPoint,jdbcType=INTEGER},
+      acc_money = #{accMoney,jdbcType=INTEGER},
+      recharge_card_max_money = #{rechargeCardMaxMoney,jdbcType=NUMERIC},
+      user_count = #{userCount,jdbcType=BIGINT},
+      pay_user_count = #{payUserCount,jdbcType=BIGINT},
+      feature = #{feature,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

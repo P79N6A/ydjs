@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPayYeepayCallbackMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPayYeepayCallback">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="yborderid" jdbcType="BIGINT" property="yborderid" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="bankcode" jdbcType="VARCHAR" property="bankcode" />
+    <result column="bank" jdbcType="VARCHAR" property="bank" />
+    <result column="lastno" jdbcType="VARCHAR" property="lastno" />
+    <result column="cardtype" jdbcType="INTEGER" property="cardtype" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="paystatus" jdbcType="INTEGER" property="paystatus" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="ordertype" jdbcType="INTEGER" property="ordertype" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="payurl" jdbcType="VARCHAR" property="payurl" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, yborderid, orderid, bankcode, bank, lastno, cardtype, amount, paystatus, status, 
+    ordertype, sign, payurl, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_pay_yeepay_callback
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByYbOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_pay_yeepay_callback
+    where yborderid = #{yborderid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_pay_yeepay_callback
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_pay_yeepay_callback
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPayYeepayCallback">
+    insert into yd_pay_yeepay_callback (id, yborderid, orderid, 
+      bankcode, bank, lastno, 
+      cardtype, amount, paystatus, 
+      status, ordertype, sign, payurl,
+      create_date, modify_date)
+    values (nextval('seq_yd_pay_yeepay_callback_id'), #{yborderid,jdbcType=BIGINT}, #{orderid,jdbcType=VARCHAR},
+      #{bankcode,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{lastno,jdbcType=VARCHAR}, 
+      #{cardtype,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{ordertype,jdbcType=INTEGER}, #{sign,jdbcType=VARCHAR}, #{payurl,jdbcType=VARCHAR},
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPayYeepayCallback">
+    insert into yd_pay_yeepay_callback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="yborderid != null">
+        yborderid,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="bankcode != null">
+        bankcode,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+      <if test="lastno != null">
+        lastno,
+      </if>
+      <if test="cardtype != null">
+        cardtype,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="paystatus != null">
+        paystatus,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="ordertype != null">
+        ordertype,
+      </if>
+      <if test="sign != null">
+        sign,
+      </if>
+      <if test="payurl != null">
+        payurl,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_pay_yeepay_callback_id'),
+      </if>
+      <if test="yborderid != null">
+        #{yborderid,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcode != null">
+        #{bankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="lastno != null">
+        #{lastno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardtype != null">
+        #{cardtype,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null">
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null">
+        #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="sign != null">
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="payurl != null">
+        #{payurl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPayYeepayCallback">
+    update yd_pay_yeepay_callback
+    <set>
+      <if test="yborderid != null">
+        yborderid = #{yborderid,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcode != null">
+        bankcode = #{bankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="lastno != null">
+        lastno = #{lastno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardtype != null">
+        cardtype = #{cardtype,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null">
+        paystatus = #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null">
+        ordertype = #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="sign != null">
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="payurl != null">
+        payurl = #{payurl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPayYeepayCallback">
+    update yd_pay_yeepay_callback
+    set yborderid = #{yborderid,jdbcType=BIGINT},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      bankcode = #{bankcode,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      lastno = #{lastno,jdbcType=VARCHAR},
+      cardtype = #{cardtype,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      paystatus = #{paystatus,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      ordertype = #{ordertype,jdbcType=INTEGER},
+      sign = #{sign,jdbcType=VARCHAR},
+      payurl = #{payurl,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

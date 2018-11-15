@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdConsumerOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdConsumerOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="order_name" jdbcType="VARCHAR" property="orderName" />
+    <result column="order_date" jdbcType="DATE" property="orderDate" />
+    <result column="tableid" jdbcType="VARCHAR" property="tableid" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="order_type" jdbcType="INTEGER" property="orderType" />
+    <result column="pay_mode" jdbcType="INTEGER" property="payMode" />
+      <result column="use_cash" jdbcType="INTEGER" property="useCash" />
+    <result column="print_count" jdbcType="INTEGER" property="printCount" />
+    <result column="total_amount" jdbcType="NUMERIC" property="totalAmount" />
+    <result column="dis_total_amount" jdbcType="NUMERIC" property="disTotalAmount" />
+      <result column="commission_charge" jdbcType="NUMERIC" property="commissionCharge" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="history" jdbcType="VARCHAR" property="history" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, order_name, order_date, tableid, openid, orderid, order_type, pay_mode, use_cash, print_count, total_amount, dis_total_amount, commission_charge, status, feature, history, description, create_date,
+    modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOpenid" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    where openid = #{openid,jdbcType=VARCHAR} order by id desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOpenidIsPay" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    <![CDATA[ where openid = #{openid,jdbcType=VARCHAR} and status>0 order by id desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}]]>
+  </select>
+
+  <select id="selectByOpenidIsNoPay" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    <![CDATA[ where openid = #{openid,jdbcType=VARCHAR} and status<=0 order by id desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}]]>
+  </select>
+
+  <select id="selectByShopid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    where shopid = #{shopid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderidRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    where orderid = #{orderid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectByOrderManager" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from yd_consumer_order
+      <![CDATA[ where id >= #{firstid,jdbcType=BIGINT} and id <= #{lastid,jdbcType=BIGINT} and shopid = #{shopid,jdbcType=VARCHAR} order by id desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}]]>
+  </select>
+
+  <select id="selectByOrderManagerHaveTableId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_consumer_order
+    <![CDATA[ where id >= #{firstid,jdbcType=BIGINT} and id <= #{lastid,jdbcType=BIGINT} and shopid = #{shopid,jdbcType=VARCHAR} and tableid = #{tableid,jdbcType=VARCHAR} order by id desc limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}]]>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_consumer_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdConsumerOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into yd_consumer_order (shopid, order_name, order_date, tableid, openid,
+      orderid, order_type, pay_mode, use_cash, print_count, total_amount, dis_total_amount,commission_charge,
+      status, feature, history, description, create_date,
+      modify_date)
+    values (#{shopid,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, #{orderDate,jdbcType=DATE}, #{tableid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
+      #{orderid,jdbcType=VARCHAR}, #{orderType,jdbcType=INTEGER}, #{payMode,jdbcType=INTEGER}, #{useCash,jdbcType=INTEGER}, #{printCount,jdbcType=INTEGER},
+      #{totalAmount,jdbcType=NUMERIC}, #{disTotalAmount,jdbcType=NUMERIC}, #{commissionCharge,jdbcType=NUMERIC},
+      #{status,jdbcType=INTEGER}, #{feature,jdbcType=VARCHAR}, #{history,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdConsumerOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into yd_consumer_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="orderName != null">
+        order_name,
+      </if>
+      <if test="orderDate != null">
+        order_date,
+      </if>
+      <if test="tableid != null">
+        tableid,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="payMode != null">
+        pay_mode,
+      </if>
+        <if test="useCash != null">
+            use_cash,
+        </if>
+      <if test="printCount != null">
+        print_count,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="disTotalAmount != null">
+        dis_total_amount,
+      </if>
+      <if test="commissionCharge != null">
+          commission_charge,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="history != null">
+        history,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderName != null">
+        #{order_name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="tableid != null">
+        #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+        <if test="useCash != null">
+            #{useCash,jdbcType=INTEGER},
+        </if>
+      <if test="printCount != null">
+        #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="disTotalAmount != null">
+        #{disTotalAmount,jdbcType=NUMERIC},
+      </if>
+        <if test="commissionCharge != null">
+            #{commissionCharge,jdbcType=NUMERIC},
+        </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null">
+        #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdConsumerOrder">
+    update yd_consumer_order
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderName != null">
+        order_name = #{orderName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableid != null">
+        tableid = #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="payMode != null">
+        pay_mode = #{payMode,jdbcType=INTEGER},
+      </if>
+        <if test="useCash != null">
+            use_cash = #{useCash,jdbcType=INTEGER},
+        </if>
+      <if test="printCount != null">
+        print_count = #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="disTotalAmount != null">
+        dis_total_amount = #{disTotalAmount,jdbcType=NUMERIC},
+      </if>
+        <if test="commissionCharge != null">
+            commission_charge = #{commissionCharge,jdbcType=NUMERIC},
+        </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null">
+        history = #{history,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdConsumerOrder">
+    update yd_consumer_order
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      order_name = #{orderName,jdbcType=VARCHAR},
+      tableid = #{tableid,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=INTEGER},
+      pay_mode = #{payMode,jdbcType=INTEGER},
+      use_cash = #{useCash,jdbcType=INTEGER},
+      print_count = #{printCount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=NUMERIC},
+      dis_total_amount = #{disTotalAmount,jdbcType=NUMERIC},
+      commission_charge = #{commissionCharge,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      history = #{history,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

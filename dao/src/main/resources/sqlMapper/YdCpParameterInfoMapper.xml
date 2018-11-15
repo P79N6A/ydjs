@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdCpParameterInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdCpParameterInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="skuid" jdbcType="VARCHAR" property="skuid" />
+    <result column="parameterid" jdbcType="VARCHAR" property="parameterid" />
+    <result column="parameter_key" jdbcType="VARCHAR" property="parameterKey" />
+    <result column="parameter_value" jdbcType="VARCHAR" property="parameterValue" />
+    <result column="parameter_group" jdbcType="VARCHAR" property="parameterGroup" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, skuid, parameterid, parameter_key, parameter_value, parameter_group, 
+    is_delete, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_cp_parameter_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByShopid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_parameter_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and is_delete=0
+  </select>
+
+  <select id="selectBySkuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_parameter_info
+    where skuid = #{skuid,jdbcType=VARCHAR} and is_delete=0
+  </select>
+
+  <select id="selectByParameterid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_cp_parameter_info
+    where parameterid = #{parameterid,jdbcType=VARCHAR} and is_delete=0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_cp_parameter_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdCpParameterInfo">
+    insert into yd_cp_parameter_info (id, shopid, skuid, 
+      parameterid, parameter_key, parameter_value, 
+      parameter_group, is_delete, create_date, 
+      modify_date)
+    values (nextval('seq_yd_cp_parameter_info_id'), #{shopid,jdbcType=VARCHAR}, #{skuid,jdbcType=VARCHAR},
+      #{parameterid,jdbcType=VARCHAR}, #{parameterKey,jdbcType=VARCHAR}, #{parameterValue,jdbcType=VARCHAR}, 
+      #{parameterGroup,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdCpParameterInfo">
+    insert into yd_cp_parameter_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="skuid != null">
+        skuid,
+      </if>
+      <if test="parameterid != null">
+        parameterid,
+      </if>
+      <if test="parameterKey != null">
+        parameter_key,
+      </if>
+      <if test="parameterValue != null">
+        parameter_value,
+      </if>
+      <if test="parameterGroup != null">
+        parameter_group,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_cp_parameter_info_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="skuid != null">
+        #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterid != null">
+        #{parameterid,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterKey != null">
+        #{parameterKey,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterValue != null">
+        #{parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterGroup != null">
+        #{parameterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdCpParameterInfo">
+    update yd_cp_parameter_info
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="skuid != null">
+        skuid = #{skuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterid != null">
+        parameterid = #{parameterid,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterKey != null">
+        parameter_key = #{parameterKey,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterValue != null">
+        parameter_value = #{parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterGroup != null">
+        parameter_group = #{parameterGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdCpParameterInfo">
+    update yd_cp_parameter_info
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      skuid = #{skuid,jdbcType=VARCHAR},
+      parameterid = #{parameterid,jdbcType=VARCHAR},
+      parameter_key = #{parameterKey,jdbcType=VARCHAR},
+      parameter_value = #{parameterValue,jdbcType=VARCHAR},
+      parameter_group = #{parameterGroup,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

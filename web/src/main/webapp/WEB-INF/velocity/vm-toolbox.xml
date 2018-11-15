@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 在此加入需要的tool,vm解析的时候可以用-->
+<toolbox>
+    <xhtml>true</xhtml>
+
+    <tool>
+        <key>stringUtils</key>
+        <scope>application</scope>
+        <class>org.apache.commons.lang.StringUtils</class>
+    </tool>
+
+    <tool>
+        <key>mathTool</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.MathTool</class>
+    </tool>
+
+    <tool>
+        <key>dateTool</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.DateTool</class>
+    </tool>
+
+    <!--<tool>-->
+        <!--<key>ProductCache</key>-->
+        <!--<scope>application</scope>-->
+        <!--<class>com.cainiao.cmdp.cache.ProductCache</class>-->
+    <!--</tool>-->
+
+    <!--<tool>-->
+        <!--<key>csrfToken</key>-->
+        <!--<scope>request</scope>-->
+        <!--<class>com.taobao.security.token.spring.CsrfTokenForOther</class>-->
+    <!--</tool>-->
+
+</toolbox>

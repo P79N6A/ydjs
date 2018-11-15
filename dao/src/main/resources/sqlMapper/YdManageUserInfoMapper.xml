@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdManageUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdManageUserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="unionid" jdbcType="VARCHAR" property="unionid" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl" />
+    <result column="head_img_type" jdbcType="INTEGER" property="headImgType" />
+    <result column="wex_group_id" jdbcType="INTEGER" property="wexGroupId" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="original" jdbcType="VARCHAR" property="original" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="weixin_access_token" jdbcType="VARCHAR" property="weixinAccessToken" />
+    <result column="weixin_refresh_token" jdbcType="VARCHAR" property="weixinRefreshToken" />
+    <result column="weixin_token_expire_in" jdbcType="TIMESTAMP" property="weixinTokenExpireIn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unionid, openid, nick, sex, city, province, country, head_img_url, head_img_type, 
+    wex_group_id, mobile, email, password, original, flag, status, feature, create_date, 
+    modify_date, modifier, weixin_access_token, weixin_refresh_token, weixin_token_expire_in
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where unionid = #{unionid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUnionIdLockRow" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where unionid = #{unionid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOpenidLockRow" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where openid = #{openid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+  <select id="selectByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByMobileLockRow" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_manage_user_info
+    where mobile = #{mobile,jdbcType=VARCHAR}  FOR UPDATE;
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_manage_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdManageUserInfo">
+    insert into yd_manage_user_info (id, unionid, openid, 
+      nick, sex, city, province, 
+      country, head_img_url, head_img_type, 
+      wex_group_id, mobile, email, 
+      password, original, flag, 
+      status, feature, create_date, 
+      modify_date, modifier, weixin_access_token, 
+      weixin_refresh_token, weixin_token_expire_in
+      )
+    values (nextval('seq_yd_manage_user_info_id'), #{unionid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
+      #{nick,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{headImgUrl,jdbcType=VARCHAR}, #{headImgType,jdbcType=INTEGER}, 
+      #{wexGroupId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{original,jdbcType=VARCHAR}, #{flag,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{feature,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0), #{modifier,jdbcType=VARCHAR}, #{weixinAccessToken,jdbcType=VARCHAR},
+      #{weixinRefreshToken,jdbcType=VARCHAR}, #{weixinTokenExpireIn,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdManageUserInfo">
+    insert into yd_manage_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unionid != null">
+        unionid,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="nick != null">
+        nick,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url,
+      </if>
+      <if test="headImgType != null">
+        head_img_type,
+      </if>
+      <if test="wexGroupId != null">
+        wex_group_id,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="original != null">
+        original,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="weixinAccessToken != null">
+        weixin_access_token,
+      </if>
+      <if test="weixinRefreshToken != null">
+        weixin_refresh_token,
+      </if>
+      <if test="weixinTokenExpireIn != null">
+        weixin_token_expire_in,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_manage_user_info_id'),
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgType != null">
+        #{headImgType,jdbcType=INTEGER},
+      </if>
+      <if test="wexGroupId != null">
+        #{wexGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="original != null">
+        #{original,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAccessToken != null">
+        #{weixinAccessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinRefreshToken != null">
+        #{weixinRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinTokenExpireIn != null">
+        #{weixinTokenExpireIn,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdManageUserInfo">
+    update yd_manage_user_info
+    <set>
+      <if test="unionid != null">
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgType != null">
+        head_img_type = #{headImgType,jdbcType=INTEGER},
+      </if>
+      <if test="wexGroupId != null">
+        wex_group_id = #{wexGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="original != null">
+        original = #{original,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAccessToken != null">
+        weixin_access_token = #{weixinAccessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinRefreshToken != null">
+        weixin_refresh_token = #{weixinRefreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinTokenExpireIn != null">
+        weixin_token_expire_in = #{weixinTokenExpireIn,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdManageUserInfo">
+    update yd_manage_user_info
+    set unionid = #{unionid,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      nick = #{nick,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      head_img_type = #{headImgType,jdbcType=INTEGER},
+      wex_group_id = #{wexGroupId,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      original = #{original,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      feature = #{feature,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0),
+      modifier = #{modifier,jdbcType=VARCHAR},
+      weixin_access_token = #{weixinAccessToken,jdbcType=VARCHAR},
+      weixin_refresh_token = #{weixinRefreshToken,jdbcType=VARCHAR},
+      weixin_token_expire_in = #{weixinTokenExpireIn,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config description="自动配置">
+
+    <group name="ydsp">
+        <property name="web.encoding" defaultValue="UTF-8" description="默认编码"/>
+        <property name="user.root" />
+        <property name="redis.host" />
+        <property name="redis.port" />
+        <property name="redis.password" />
+        <property name="sms.key"/>
+        <property name="sms.secret"/>
+        <property name="jdbc.driverClassName" />
+        <property name="jdbc.url" />
+        <property name="jdbc.username" />
+        <property name="jdbc.password" />
+        <property name="jdbc.dialect" />
+    </group>
+
+	<script>
+	 <!--<generate template="spring/biz.xml"  charset="UTF-8" />-->
+    </script>
+
+</config>

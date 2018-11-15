@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShoporderStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShoporderStatistics">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="order_date" jdbcType="DATE" property="orderDate" />
+    <result column="firstid" jdbcType="BIGINT" property="firstid" />
+    <result column="lastid" jdbcType="BIGINT" property="lastid" />
+    <result column="withdrawals" jdbcType="INTEGER" property="withdrawals" />
+      <result column="check_request" jdbcType="INTEGER" property="checkRequest" />
+    <result column="order_count" jdbcType="INTEGER" property="orderCount" />
+    <result column="bag_count" jdbcType="INTEGER" property="bagCount" />
+    <result column="receive_amount" jdbcType="NUMERIC" property="receiveAmount" />
+      <result column="receivecash_amount" jdbcType="NUMERIC" property="receivecashAmount" />
+      <result column="feature" jdbcType="VARCHAR" property="feature" />
+      <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, order_date, firstid, lastid, withdrawals, check_request, order_count, bag_count, receive_amount, receivecash_amount,
+    feature, description, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shoporder_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByShopidRowLock" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shoporder_statistics
+    where shopid = #{shopid,jdbcType=VARCHAR} and order_date = #{orderDate,jdbcType=DATE} FOR UPDATE;
+  </select>
+  <select id="selectByShopid" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shoporder_statistics
+    where shopid = #{shopid,jdbcType=VARCHAR} and order_date = #{orderDate,jdbcType=DATE} order by id
+  </select>
+  <select id="selectByOrderDate" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shoporder_statistics
+    <![CDATA[ where shopid = #{shopid,jdbcType=VARCHAR} and (order_date >= #{orderDateBegin,jdbcType=DATE} and order_date <= #{orderDateEnd,jdbcType=DATE}) order by id  limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}]]>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shoporder_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShoporderStatistics" useGeneratedKeys="true" keyProperty="id">
+    insert into yd_shoporder_statistics (shopid, order_date,
+      firstid, lastid, withdrawals, check_request, order_count,
+      bag_count, receive_amount, receivecash_amount, feature, description,
+      create_date, modify_date)
+    values (#{shopid,jdbcType=VARCHAR}, #{orderDate,jdbcType=DATE},
+      #{firstid,jdbcType=BIGINT}, #{lastid,jdbcType=BIGINT},
+        #{withdrawals,jdbcType=INTEGER}, #{checkRequest,jdbcType=INTEGER}, #{orderCount,jdbcType=INTEGER},
+      #{bagCount,jdbcType=INTEGER}, #{receiveAmount,jdbcType=NUMERIC}, #{receivecashAmount,jdbcType=NUMERIC}, #{feature,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShoporderStatistics" useGeneratedKeys="true" keyProperty="id">
+    insert into yd_shoporder_statistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="orderDate != null">
+        order_date,
+      </if>
+      <if test="firstid != null">
+        firstid,
+      </if>
+      <if test="lastid != null">
+        lastid,
+      </if>
+      <if test="withdrawals != null">
+        withdrawals,
+      </if>
+        <if test="checkRequest != null">
+            check_request,
+        </if>
+      <if test="orderCount != null">
+        order_count,
+      </if>
+      <if test="bagCount != null">
+        bag_count,
+      </if>
+      <if test="receiveAmount != null">
+        receive_amount,
+      </if>
+        <if test="receivecashAmount != null">
+            receivecash_amount,
+        </if>
+      <if test="feature != null">
+        feature,
+      </if>
+        <if test="description != null">
+            description,
+        </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="firstid != null">
+        #{firstid,jdbcType=BIGINT},
+      </if>
+      <if test="lastid != null">
+        #{lastid,jdbcType=BIGINT},
+      </if>
+      <if test="withdrawals != null">
+        #{withdrawals,jdbcType=INTEGER},
+      </if>
+        <if test="checkRequest != null">
+            #{checkRequest,jdbcType=INTEGER},
+        </if>
+      <if test="orderCount != null">
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="bagCount != null">
+        #{bagCount,jdbcType=INTEGER},
+      </if>
+      <if test="receiveAmount != null">
+        #{receiveAmount,jdbcType=NUMERIC},
+      </if>
+        <if test="receivecashAmount != null">
+            #{receivecashAmount,jdbcType=NUMERIC},
+        </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+        <if test="description != null">
+            #{description,jdbcType=VARCHAR},
+        </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShoporderStatistics">
+    update yd_shoporder_statistics
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="firstid != null">
+        firstid = #{firstid,jdbcType=BIGINT},
+      </if>
+      <if test="lastid != null">
+        lastid = #{lastid,jdbcType=BIGINT},
+      </if>
+      <if test="withdrawals != null">
+        withdrawals = #{withdrawals,jdbcType=INTEGER},
+      </if>
+        <if test="checkRequest != null">
+            check_request = #{checkRequest,jdbcType=INTEGER},
+        </if>
+      <if test="orderCount != null">
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="bagCount != null">
+        bag_count = #{bagCount,jdbcType=INTEGER},
+      </if>
+      <if test="receiveAmount != null">
+        receive_amount = #{receiveAmount,jdbcType=NUMERIC},
+      </if>
+        <if test="receivecashAmount != null">
+            receivecash_amount = #{receivecashAmount,jdbcType=NUMERIC},
+        </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+        <if test="description != null">
+            description = #{description,jdbcType=VARCHAR},
+        </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShoporderStatistics">
+    update yd_shoporder_statistics
+    set firstid = #{firstid,jdbcType=BIGINT},
+      lastid = #{lastid,jdbcType=BIGINT},
+      withdrawals = #{withdrawals,jdbcType=INTEGER},
+      check_request = #{checkRequest,jdbcType=INTEGER},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      bag_count = #{bagCount,jdbcType=INTEGER},
+      receive_amount = #{receiveAmount,jdbcType=NUMERIC},
+      receivecash_amount = #{receivecashAmount,jdbcType=NUMERIC},
+      feature = #{feature,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

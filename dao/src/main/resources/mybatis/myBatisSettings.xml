@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
+    </settings>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--<property name="dialect" value="PostgreSQL"/>-->
+            <property name="offsetAsPageNum" value="false"/>
+            <property name="rowBoundsWithCount" value="false"/>
+            <property name="pageSizeZero" value="true"/>
+            <property name="reasonable" value="false"/>
+            <property name="supportMethodsArguments" value="false"/>
+            <property name="returnPageInfo" value="none"/>
+        </plugin>
+    </plugins>
+    <!--<typeHandlers>-->
+        <!--&lt;!&ndash;<typeHandler javaType="java.util.Map"&ndash;&gt;-->
+                     <!--&lt;!&ndash;handler="com.yd.ydsp.dal.mybatis.JsonTypeHandler"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<typeHandler javaType="com.yd.ydsp.dal.entity.YdUserFutureInfo" jdbcType="OTHER"&ndash;&gt;-->
+                     <!--&lt;!&ndash;handler="com.yd.ydsp.dal.mybatis.JSONHandler"/>&ndash;&gt;-->
+        <!--<typeHandler javaType="com.alibaba.fastjson.JSONObject" jdbcType="OTHER"-->
+                     <!--handler="com.yd.ydsp.dal.mybatis.JsonTypeHandler"/>-->
+        <!--&lt;!&ndash;<typeHandler javaType="java.util.List" jdbcType="OTHER"&ndash;&gt;-->
+                     <!--&lt;!&ndash;handler="com.yd.ydsp.dal.mybatis.JSONHandler"/>&ndash;&gt;-->
+    <!--</typeHandlers>-->
+</configuration>

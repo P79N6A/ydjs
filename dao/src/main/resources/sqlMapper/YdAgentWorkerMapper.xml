@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdAgentWorkerMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdAgentWorker">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="agentid" jdbcType="VARCHAR" property="agentid" />
+    <result column="owner_mobile" jdbcType="VARCHAR" property="ownerMobile" />
+    <result column="manager_mobile" jdbcType="VARCHAR" property="managerMobile" />
+    <result column="waiter_mobile" jdbcType="VARCHAR" property="waiterMobile" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, agentid, owner_mobile, manager_mobile, waiter_mobile, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_agent_worker
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByAgentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_worker
+    where agentid = #{agentid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAgentIdRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_worker
+    where agentid = #{agentid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_agent_worker
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdAgentWorker">
+    insert into yd_agent_worker (id, agentid, owner_mobile, 
+      manager_mobile, waiter_mobile, create_date, 
+      modify_date)
+    values (nextval('seq_yd_agent_worker_id'), #{agentid,jdbcType=VARCHAR}, #{ownerMobile,jdbcType=VARCHAR},
+      #{managerMobile,jdbcType=VARCHAR}, #{waiterMobile,jdbcType=VARCHAR}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdAgentWorker">
+    insert into yd_agent_worker
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="agentid != null">
+        agentid,
+      </if>
+      <if test="ownerMobile != null">
+        owner_mobile,
+      </if>
+      <if test="managerMobile != null">
+        manager_mobile,
+      </if>
+      <if test="waiterMobile != null">
+        waiter_mobile,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_agent_worker_id'),
+      </if>
+      <if test="agentid != null">
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerMobile != null">
+        #{ownerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="managerMobile != null">
+        #{managerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="waiterMobile != null">
+        #{waiterMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdAgentWorker">
+    update yd_agent_worker
+    <set>
+      <if test="agentid != null">
+        agentid = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerMobile != null">
+        owner_mobile = #{ownerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="managerMobile != null">
+        manager_mobile = #{managerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="waiterMobile != null">
+        waiter_mobile = #{waiterMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdAgentWorker">
+    update yd_agent_worker
+    set agentid = #{agentid,jdbcType=VARCHAR},
+      owner_mobile = #{ownerMobile,jdbcType=VARCHAR},
+      manager_mobile = #{managerMobile,jdbcType=VARCHAR},
+      waiter_mobile = #{waiterMobile,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

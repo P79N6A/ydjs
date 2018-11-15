@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="ossFileService" class="com.yd.ydsp.biz.oss.impl.OSSFileServiceImpl"/>
+    <bean id="agentApplyCacheService" class="com.yd.ydsp.biz.cp.impl.AgentApplyCacheServiceImpl"/>
+
+    <bean id="addressSysService" class="com.yd.ydsp.biz.address.impl.AddressSysServiceImpl">
+        <property name="appName" value="${map.gaode}"/>
+        <property name="appKey" value="${map.gaode.key}"/>
+        <property name="cacheOn" value="true"/>
+    </bean>
+
+    <bean id="weixinOauth2Service2b" class="com.yd.ydsp.biz.weixin.impl.WeixinOauth2ServiceImpl">
+        <property name="appid" value="${weixin2b.appid}"/>
+        <property name="secret" value="${weixin2b.secret}"/>
+        <property name="msgToken" value="${weixin2b.msgToken}"/>
+        <property name="type" value="WEIXIN2B"/>
+        <property name="cacheOn" value="true"/>
+    </bean>
+
+    <bean id="weixinOauth2Service2c" class="com.yd.ydsp.biz.weixin.impl.WeixinOauth2ServiceImpl">
+        <property name="appid" value="${weixin2c.appid}"/>
+        <property name="secret" value="${weixin2c.secret}"/>
+        <property name="msgToken" value="${weixin2c.msgToken}"/>
+        <property name="type" value="WEIXIN2C"/>
+        <property name="cacheOn" value="true"/>
+    </bean>
+
+    <bean id="weixinOauth2ServiceWeb" class="com.yd.ydsp.biz.weixin.impl.WeixinOauth2ServiceImpl">
+        <property name="appid" value="${weixinWeb.appid}"/>
+        <property name="secret" value="${weixinWeb.secret}"/>
+        <property name="msgToken" value="123456"/>
+        <property name="type" value="WEIXINXIAOER"/>
+        <property name="cacheOn" value="true"/>
+    </bean>
+
+    <bean id="weixinOauth2ShopService" class="com.yd.ydsp.biz.weixin.impl.WeixinOauth2ShopServiceImpl" init-method="init">
+        <property name="cacheOn" value="true"/>
+        <property name="weixinOpenAppId" value="${weixinOpen.appid}"/>
+        <property name="weixinOpenSecret" value="${weixinOpen.secret}"/>
+        <property name="weixinOpenToken" value="${weixinOpen.msgToken}"/>
+        <property name="weixinOpenAesKey" value="${weixinOpen.symmetricKey}"/>
+    </bean>
+
+    <bean id="weixinEvent2ShopService" class="com.yd.ydsp.biz.weixin.impl.WeixinEvent2ShopServiceImpl">
+    </bean>
+
+    <bean id="weixinEventService2b" class="com.yd.ydsp.biz.weixin.impl.WeixinEventServiceImpl" init-method="init">
+        <property name="type" value="WEIXIN2B"/>
+        <property name="msgToken" value="${weixin2b.msgToken}"/>
+    </bean>
+    <bean id="weixinEventService2c" class="com.yd.ydsp.biz.weixin.impl.WeixinEventServiceImpl" init-method="init">
+        <property name="type" value="WEIXIN2C"/>
+        <property name="msgToken" value="${weixin2c.msgToken}"/>
+    </bean>
+
+
+    <bean id="weiXinPayService" class="com.yd.ydsp.biz.pay.impl.WeiXinPayServiceImpl">
+        <property name="ydjsAppId" value="${weixin2b.appid}"/>
+        <property name="ydjsMchId" value="${weixin2b.service.mchid}"/>
+        <property name="yd2bMchId" value="${weixin2b.normal.mchid}"/>
+    </bean>
+
+    <bean id="getWeinXinUserInfoProcess" class="com.yd.ydsp.biz.process.weixin.GetWeinXinUserInfoProcess"/>
+
+    <bean id="fePrinterService" class="com.yd.ydsp.biz.yunprinter.impl.FEPrinterServiceImpl" >
+        <property name="apiUrl" value="${FEPrinter.url}" />
+        <property name="user" value="${FEPrinter.user}" />
+        <property name="userKey" value="${FEPrinter.userKey}" />
+        <property name="debug" value="0" />
+    </bean>
+
+    <bean id="ylPrinterService" class="com.yd.ydsp.biz.yunprinter.impl.YLPrinterServiceImpl" >
+        <property name="apiUrl" value="${YLPrinter.url}" />
+        <property name="appId" value="${YLPrinter.appid}" />
+        <property name="secret" value="${YLPrinter.secret}" />
+        <property name="cacheOn" value="false"/>
+    </bean>
+
+    <bean id="smsMessageService" class="com.yd.ydsp.biz.message.impl.SmsMessageServiceImpl" init-method="init">
+        <property name="accessKeyId" value="${sms.key}"/>
+        <property name="accessKeySecret" value="${sms.secret}"/>
+    </bean>
+    <bean id="mqMessageService" class="com.yd.ydsp.biz.message.mq.MqMessageServiceImpl"/>
+    <!--<bean id="mnsService" class="com.yd.ydsp.biz.message.impl.MnsServiceImpl" init-method="init" destroy-method="destroy">-->
+        <!--<property name="accessKeyId" value="${mns.key}"/>-->
+        <!--<property name="accessKeySecret" value="${mns.secret}"/>-->
+        <!--<property name="endpoint" value="${mns.endpoint}"/>-->
+    <!--</bean>-->
+
+    <bean id="orderSearchService" class="com.yd.ydsp.biz.opensearch.impl.OrderSearchServiceImpl" init-method="init">
+        <property name="accesskey" value="${opensearch.key}"/>
+        <property name="secret" value="${opensearch.secret}"/>
+        <property name="host" value="${opensearch.host}"/>
+    </bean>
+
+    <bean id="goodsSearchService" class="com.yd.ydsp.biz.opensearch.impl.GoodsSearchServiceImpl" init-method="init">
+        <property name="accesskey" value="${opensearch.key}"/>
+        <property name="secret" value="${opensearch.secret}"/>
+        <property name="host" value="${opensearch.host}"/>
+    </bean>
+
+    <bean id="ys7Service" class="com.yd.ydsp.biz.ys7.Ys7ServiceImpl"/>
+    <bean id="userinfoService" class="com.yd.ydsp.biz.user.impl.UserinfoServiceImpl"/>
+    <bean id="userinfo2ShopService" class="com.yd.ydsp.biz.user.impl.Userinfo2ShopServiceImpl"/>
+    <bean id="shopInfoService" class="com.yd.ydsp.biz.cp.impl.ShopInfoServiceImpl"/>
+    <bean id="shopPageService" class="com.yd.ydsp.biz.openshop.impl.ShopPageServiceImpl"/>
+    <bean id="yeePayService" class="com.yd.ydsp.biz.pay.impl.YeePayServiceImpl"/>
+    <bean id="ydPayService" class="com.yd.ydsp.biz.pay.impl.YdPayServiceImpl"/>
+    <bean id="cpMonitorService" class="com.yd.ydsp.biz.cp.impl.CpMonitorServiceImpl"/>
+    <bean id="ydUserCpAddressService" class="com.yd.ydsp.biz.user.impl.YDUserCpAddressServiceImpl"/>
+    <bean id="cpService" class="com.yd.ydsp.biz.cp.impl.CpServiceImpl"/>
+    <bean id="specConfigService" class="com.yd.ydsp.biz.cp.impl.SpecConfigServiceImpl"/>
+    <bean id="wareService" class="com.yd.ydsp.biz.cp.impl.WareServiceImpl"/>
+    <bean id="wareExtService" class="com.yd.ydsp.biz.cp.impl.WareExtServiceImpl"/>
+    <bean id="cpMallService" class="com.yd.ydsp.biz.cp.impl.CpMallServiceImpl"/>
+    <bean id="cpBillService" class="com.yd.ydsp.biz.cp.impl.CpBillServiceImpl"/>
+    <bean id="cpChannelService" class="com.yd.ydsp.biz.cp.impl.CpChannelServiceImpl"/>
+    <bean id="shopOrderService" class="com.yd.ydsp.biz.openshop.impl.ShopOrderServiceImpl"/>
+    <bean id="shopGoodsService" class="com.yd.ydsp.biz.openshop.impl.ShopGoodsServiceImpl"/>
+    <bean id="shopActivityService" class="com.yd.ydsp.biz.cp.impl.ShopActivityServiceImpl"/>
+    <bean id="shopIndexPageService" class="com.yd.ydsp.biz.cp.impl.ShopIndexPageServiceImpl"/>
+    <bean id="weixinSamll2ShopService" class="com.yd.ydsp.biz.weixin.impl.WeixinSamll2ShopServiceImpl"/>
+    <bean id="shopCashRechargeService" class="com.yd.ydsp.biz.openshop.impl.ShopCashRechargeServiceImpl"/>
+
+
+    <bean id="daDaDeliveryService" class="com.yd.ydsp.biz.deliver.impl.DaDaDeliveryServiceImpl" init-method="init">
+        <property name="key" value="${dada.key}"/>
+        <property name="secret" value="${dada.secret}"/>
+        <property name="sourceid" value="${dada.sourceid}"/>
+        <property name="apiUrl" value="${dada.url}"/>
+    </bean>
+
+    <bean id="uuDeliveryService" class="com.yd.ydsp.biz.deliver.impl.UUDeliveryServiceImpl">
+        <property name="key" value="${uu.key}"/>
+        <property name="secret" value="${uu.secret}"/>
+        <property name="requestAdress" value="${uu.url}"/>
+        <property name="sourceId" value="${uu.sourceid}"/>
+    </bean>
+
+    <bean id="shoppingMall2CService" class="com.yd.ydsp.biz.customer.impl.ShoppingMall2CServiceImpl"/>
+
+    <bean id="cpAgentService" class="com.yd.ydsp.biz.manage.impl.CpAgentServiceImpl"/>
+    <bean id="ydXiaoerService" class="com.yd.ydsp.biz.manage.impl.YdXiaoerServiceImpl"/>
+    <bean id="shopApplyService" class="com.yd.ydsp.biz.openshop.impl.ShopApplyServiceImpl"/>
+
+
+</beans>

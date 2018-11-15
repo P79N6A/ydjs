@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- spring mvc 的配置无法和 spring context 共享，需要重新加载 -->
+	<context:property-placeholder location="classpath*:config.properties" />
+
+	<!--编码过滤-->
+	<bean id="encodingFilterBean" class="org.springframework.web.filter.CharacterEncodingFilter">
+		<property name="encoding" value="${web.encoding}" />
+		<property name="forceEncoding" value="false" />
+	</bean>
+
+	<!--sso-->
+	<!--<bean id="ssoFilterBean" class="com.alibaba.buc.sso.client.filter.SSOFilter">
+		<property name="initParams" >
+			<map>
+				&lt;!&ndash; ps:修改app_name成在应用接入方的应用名，此应用名会在buc系统上注册&ndash;&gt;
+				<entry key="APP_NAME" value="${sso.app.name}" />
+				<entry key="SSO_CALLBACK_CLASS" value="com.alibaba.buc.sso.client.handler.impl.BucSSOCallBack" />
+				&lt;!&ndash; 线上应用SS请使用:  https://login.alibaba-inc.com 日常:https://login-test.alibaba-inc.com  &ndash;&gt;
+				<entry key="SSO_SERVER_URL" value="${sso.server.url}" />
+				&lt;!&ndash; 请修改为注册时由BUC 颁发的值  &ndash;&gt;
+				<entry key="CLIENT_KEY" value="${sso.app.key}" />
+				&lt;!&ndash;不走sso验证的requestUri(应用请根据实际情况修改)，uri间用半角逗号隔开。*通配任意多个字符，?通配任意单个字符&ndash;&gt;
+				<entry key="EXCLUSIONS" value="*/status.taobao,/checkpreload.htm,/login.htm,/logout.htm,/static/*" />
+			</map>
+		</property>
+	</bean>-->
+
+	<!--去除空格-->
+	<bean id="trimParametersFilterBean" class="com.yd.ydsp.web.filter.TrimParametersFilter" />
+	<!--防html转义-->
+	<!--<bean id="htmlEscapeFilterBean" class="com.yd.ydsp.web.filter.HtmlEscape"/>-->
+
+	<!--
+		CSRF protection. Here we only include the CsrfFilter instead of all of Spring Security.
+		See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf for more information on
+		Spring Security's CSRF protection
+	-->
+	<bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+		<constructor-arg>
+			<bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
+		</constructor-arg>
+	</bean>
+	<!--
+		Provides automatic CSRF token inclusion when using Spring MVC Form tags or Thymeleaf. See
+		http://localhost:8080/#forms and form.jsp for examples
+	-->
+	<bean id="requestDataValueProcessor" class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor"/>
+
+	<!--<import resource="spring-shiro.xml"/>-->
+
+
+</beans>

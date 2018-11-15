@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:task="http://www.springframework.org/schema/task"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- spring mvc 的配置无法和 spring context 共享，需要重新加载 -->
+    <context:property-placeholder location="classpath*:config.properties" />
+
+	<!-- DispatcherServlet 上下文: 定义该servlet的请求处理的功能服务类-->
+	
+	<!-- 启用@Controller编程模型 -->
+	<annotation-driven enable-matrix-variables="true">
+
+	</annotation-driven>
+
+	<!-- 处理http对/resouces/**中资源的get请求-->
+	<resources mapping="/resources/**" location="static/" />
+    <resources mapping="/static/**" location="static/" />
+
+    <!-- 模板信息设置 -->
+    <beans:bean id="velocityConfigurer"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <beans:property name="resourceLoaderPath"  value="WEB-INF/views/" />
+        <beans:property name="velocityProperties">
+            <beans:props>
+                <beans:prop key="input.encoding">UTF-8</beans:prop><!-- 指定模板引擎进行模板处理的编码 -->
+                <beans:prop key="output.encoding">UTF-8</beans:prop><!-- 指定输出流的编码 -->
+                <!--<beans:prop key="eventhandler.referenceinsertion.class">com.taobao.security.handler.XSSEncoderEventHandler</beans:prop>-->
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <!-- 设置视图解析工具 -->
+    <beans:bean class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <beans:property name="order" value="1" />
+        <beans:property name= "cache" value= "true"/>
+        <beans:property name="prefix" value="screen/" />
+        <beans:property name="suffix" value=".vm" />
+        <!-- 避免乱码 -->
+        <beans:property name="contentType" value="text/html;charset=utf-8" />
+        <beans:property name="toolboxConfigLocation">
+            <beans:value>/WEB-INF/velocity/vm-toolbox.xml</beans:value>
+        </beans:property>
+        <beans:property name="dateToolAttribute" value="dateTool" />
+        <beans:property name="numberToolAttribute" value="numberTool" />
+
+        <beans:property name="layoutUrl" value="layout/layout.vm" />
+
+        <beans:property name="allowSessionOverride" value="true"/>
+        <beans:property name="allowRequestOverride" value="true"/>
+        <beans:property name="exposeSessionAttributes" value="true"/>
+        <beans:property name="requestContextAttribute" value="rc"/>
+        <beans:property name="exposeRequestAttributes" value="true"/>
+    </beans:bean>
+
+    <!-- 将@Controllers注解的类返回的选中视图渲染成/WEB-INF/views目录下的.jsp文件-->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="order" value="2" />
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />
+
+        <beans:property name="contentType" value="text/html;charset=utf-8" />
+    </beans:bean>
+
+	<!-- 文件上传的时候需要该解析器 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="utf-8" />
+        <!-- 10M -->
+        <beans:property name="maxUploadSize" value="10485760" />
+        <beans:property name="uploadTempDir" value="upload/tmp" />
+    </beans:bean>
+
+    <!--定时任务的支持-->
+    <task:annotation-driven/>
+
+	<!-- 导入自定义的 @Controller beans，处理客户端请求-->
+	<beans:import resource="controllers.xml" />
+
+
+
+	
+</beans:beans>

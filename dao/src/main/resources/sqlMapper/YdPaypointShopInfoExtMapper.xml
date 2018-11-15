@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointShopInfoExtMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointShopInfoExt">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <!--<result column="weixin_config_id" jdbcType="VARCHAR" property="weixinConfigId" />-->
+    <result column="agentid" jdbcType="VARCHAR" property="agentid" />
+    <result column="owner_identification_card" jdbcType="VARCHAR" property="ownerIdentificationCard" />
+    <result column="identification_card_img1" jdbcType="VARCHAR" property="identificationCardImg1" />
+    <result column="identification_card_img2" jdbcType="VARCHAR" property="identificationCardImg2" />
+    <result column="business_code" jdbcType="VARCHAR" property="businessCode" />
+    <result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+    <result column="business_license_img" jdbcType="VARCHAR" property="businessLicenseImg" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="commend" jdbcType="VARCHAR" property="commend" />
+    <result column="must_ware" jdbcType="VARCHAR" property="mustWare" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="shop_hours" jdbcType="VARCHAR" property="shopHours" />
+    <result column="featureext" jdbcType="VARCHAR" property="featureext" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, agentid, owner_identification_card, identification_card_img1,
+    identification_card_img2, business_code, business_license, business_license_img, 
+    longitude, latitude, commend, must_ware, message, shop_hours, featureext, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_shop_info_ext
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByShopId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_shop_info_ext
+    where shopid = #{shopid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAgentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_shop_info_ext
+    where agentid = #{agentid,jdbcType=VARCHAR}
+  </select>
+
+  <!--<select id="selectByWeixinConfigId" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from yd_paypoint_shop_info_ext-->
+    <!--where weixin_config_id = #{weixinConfigId,jdbcType=VARCHAR}-->
+  <!--</select>-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    order by id desc
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_shop_info_ext
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointShopInfoExt">
+    insert into yd_paypoint_shop_info_ext (id, shopid, agentid, owner_identification_card,
+      identification_card_img1, identification_card_img2, 
+      business_code, business_license, business_license_img, 
+      longitude, latitude,commend, must_ware, message, shop_hours, featureext, create_date,
+      modify_date)
+    values (nextval('seq_yd_paypoint_shop_info_ext_id'), #{shopid,jdbcType=VARCHAR},
+      #{agentid,jdbcType=VARCHAR}, #{ownerIdentificationCard,jdbcType=VARCHAR},
+      #{identificationCardImg1,jdbcType=VARCHAR}, #{identificationCardImg2,jdbcType=VARCHAR}, 
+      #{businessCode,jdbcType=VARCHAR}, #{businessLicense,jdbcType=VARCHAR}, #{businessLicenseImg,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{commend,jdbcType=VARCHAR}, #{mustWare,jdbcType=VARCHAR},
+       #{message,jdbcType=VARCHAR}, #{shopHours,jdbcType=VARCHAR}, #{featureext,jdbcType=VARCHAR},
+       current_timestamp(0),current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointShopInfoExt">
+    insert into yd_paypoint_shop_info_ext
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="agentid != null">
+        agentid,
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card,
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1,
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2,
+      </if>
+      <if test="businessCode != null">
+        business_code,
+      </if>
+      <if test="businessLicense != null">
+        business_license,
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="commend != null">
+        commend,
+      </if>
+      <if test="mustWare != null">
+        must_ware,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="shopHours != null">
+        shop_hours,
+      </if>
+      <if test="featureext != null">
+        featureext,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_shop_info_ext_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null">
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="commend != null">
+        #{commend,jdbcType=VARCHAR},
+      </if>
+      <if test="mustWare != null">
+        #{mustWare,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="shopHours != null">
+        #{shopHours,jdbcType=VARCHAR},
+      </if>
+      <if test="featureext != null">
+        #{featureext,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointShopInfoExt">
+    update yd_paypoint_shop_info_ext
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        agentid = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCode != null">
+        business_code = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="commend != null">
+        commend = #{commend,jdbcType=VARCHAR},
+      </if>
+      <if test="mustWare != null">
+        must_ware = #{mustWare,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="shopHours != null">
+        shop_hours = #{shopHours,jdbcType=VARCHAR},
+      </if>
+      <if test="featureext != null">
+        featureext = #{featureext,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointShopInfoExt">
+    update yd_paypoint_shop_info_ext
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      agentid = #{agentid,jdbcType=VARCHAR},
+      owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      business_code = #{businessCode,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      commend = #{commend,jdbcType=VARCHAR},
+      must_ware = #{mustWare,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      shop_hours = #{shopHours,jdbcType=VARCHAR},
+      featureext = #{featureext,jdbcType=VARCHAR},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

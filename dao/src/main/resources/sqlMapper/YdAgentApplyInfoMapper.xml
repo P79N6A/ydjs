@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdAgentApplyInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdAgentApplyInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="agentid" jdbcType="VARCHAR" property="agentid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="companyname" jdbcType="VARCHAR" property="companyname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="agent_type" jdbcType="INTEGER" property="agentType" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="zipcode" jdbcType="VARCHAR" property="zipcode" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="owner_identification_card" jdbcType="VARCHAR" property="ownerIdentificationCard" />
+    <result column="identification_card_img1" jdbcType="VARCHAR" property="identificationCardImg1" />
+    <result column="identification_card_img2" jdbcType="VARCHAR" property="identificationCardImg2" />
+    <result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+    <result column="business_license_img" jdbcType="VARCHAR" property="businessLicenseImg" />
+    <result column="contract_time_begin" jdbcType="TIMESTAMP" property="contractTimeBegin" />
+    <result column="contract_time_end" jdbcType="TIMESTAMP" property="contractTimeEnd" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="jointime" jdbcType="TIMESTAMP" property="jointime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, openid, agentid, name, companyname, mobile, telephone, email, contact, sex, agent_type, 
+    address, zipcode, district, city, province, country, owner_identification_card, identification_card_img1, 
+    identification_card_img2, business_license, business_license_img, contract_time_begin, 
+    contract_time_end, feature, flag, jointime, description, ip, is_delete, status, create_date, 
+    modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAgentid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    where agentid = #{agentid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAgentidRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    where agentid = #{agentid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_agent_apply_info
+    where is_delete = 0 order by id desc
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_agent_apply_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdAgentApplyInfo">
+    insert into yd_agent_apply_info (id, openid, agentid, 
+      name, companyname, mobile, 
+      telephone, email, contact, 
+      sex, agent_type, address, 
+      zipcode, district, city, 
+      province, country, owner_identification_card, 
+      identification_card_img1, identification_card_img2, 
+      business_license, business_license_img, contract_time_begin, 
+      contract_time_end, feature, flag, 
+      jointime, description, ip, 
+      is_delete, status, create_date, 
+      modify_date)
+    values (nextval('seq_yd_agent_apply_info_id'), #{openid,jdbcType=VARCHAR}, #{agentid,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{agentType,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{zipcode,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{ownerIdentificationCard,jdbcType=VARCHAR}, 
+      #{identificationCardImg1,jdbcType=VARCHAR}, #{identificationCardImg2,jdbcType=VARCHAR}, 
+      #{businessLicense,jdbcType=VARCHAR}, #{businessLicenseImg,jdbcType=VARCHAR}, #{contractTimeBegin,jdbcType=TIMESTAMP}, 
+      #{contractTimeEnd,jdbcType=TIMESTAMP}, #{feature,jdbcType=VARCHAR}, #{flag,jdbcType=BIGINT}, 
+      #{jointime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdAgentApplyInfo">
+    insert into yd_agent_apply_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="agentid != null">
+        agentid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="companyname != null">
+        companyname,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="agentType != null">
+        agent_type,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="zipcode != null">
+        zipcode,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card,
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1,
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2,
+      </if>
+      <if test="businessLicense != null">
+        business_license,
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img,
+      </if>
+      <if test="contractTimeBegin != null">
+        contract_time_begin,
+      </if>
+      <if test="contractTimeEnd != null">
+        contract_time_end,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="jointime != null">
+        jointime,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null or createDate == null">
+        create_date,
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_agent_apply_info_id'),
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="agentType != null">
+        #{agentType,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="contractTimeBegin != null">
+        #{contractTimeBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractTimeEnd != null">
+        #{contractTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="jointime != null">
+        #{jointime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null or createDate == null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdAgentApplyInfo">
+    update yd_agent_apply_info
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        agentid = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="agentType != null">
+        agent_type = #{agentType,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdentificationCard != null">
+        owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg1 != null">
+        identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCardImg2 != null">
+        identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImg != null">
+        business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="contractTimeBegin != null">
+        contract_time_begin = #{contractTimeBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractTimeEnd != null">
+        contract_time_end = #{contractTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="jointime != null">
+        jointime = #{jointime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null or modifyDate == null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdAgentApplyInfo">
+    update yd_agent_apply_info
+    set openid = #{openid,jdbcType=VARCHAR},
+      agentid = #{agentid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      companyname = #{companyname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      agent_type = #{agentType,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      owner_identification_card = #{ownerIdentificationCard,jdbcType=VARCHAR},
+      identification_card_img1 = #{identificationCardImg1,jdbcType=VARCHAR},
+      identification_card_img2 = #{identificationCardImg2,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      business_license_img = #{businessLicenseImg,jdbcType=VARCHAR},
+      contract_time_begin = #{contractTimeBegin,jdbcType=TIMESTAMP},
+      contract_time_end = #{contractTimeEnd,jdbcType=TIMESTAMP},
+      feature = #{feature,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIGINT},
+      jointime = #{jointime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdPaypointUserContractMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdPaypointUserContract">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="contract_scene" jdbcType="VARCHAR" property="contractScene" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="contract_url" jdbcType="VARCHAR" property="contractUrl" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="identity_number" jdbcType="VARCHAR" property="identityNumber" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="contract_date" jdbcType="TIMESTAMP" property="contractDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, contract_name, contract_scene, openid, contract_id, shopid, user_type, contract_url, user_name,
+    identity_number, mobile, status, contract_date, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_paypoint_user_contract
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_user_contract
+    where openid = #{openid,jdbcType=VARCHAR} order by contract_date desc
+  </select>
+  <select id="selectByOpenidAndContractId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_user_contract
+    where openid = #{openid,jdbcType=VARCHAR} and contract_id =  #{contractId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOpenidAndContractIdAndShopid" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_paypoint_user_contract
+    where openid = #{openid,jdbcType=VARCHAR} and contract_id =  #{contractId,jdbcType=VARCHAR} and shopid = #{shopid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_paypoint_user_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdPaypointUserContract">
+    insert into yd_paypoint_user_contract (id, contract_name, contract_scene, 
+      openid, contract_id, shopid, user_type,
+      contract_url, user_name, identity_number, 
+      mobile, status, contract_date, 
+      create_date, modify_date)
+    values (nextval('seq_yd_paypoint_user_contract_id'), #{contractName,jdbcType=VARCHAR}, #{contractScene,jdbcType=VARCHAR},
+      #{openid,jdbcType=VARCHAR}, #{contractId,jdbcType=VARCHAR}, #{shopid,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER},
+      #{contractUrl,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, current_timestamp(0),
+      current_timestamp(0), current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointUserContract">
+    insert into yd_paypoint_user_contract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="contractName != null">
+        contract_name,
+      </if>
+      <if test="contractScene != null">
+        contract_scene,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="contractUrl != null">
+        contract_url,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="identityNumber != null">
+        identity_number,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="contractDate != null">
+        contract_date,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_paypoint_user_contract_id'),
+      </if>
+      <if test="contractName != null">
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractScene != null">
+        #{contractScene,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null">
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="contractUrl != null">
+        #{contractUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityNumber != null">
+        #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdPaypointUserContract">
+    update yd_paypoint_user_contract
+    <set>
+      <if test="contractName != null">
+        contract_name = #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractScene != null">
+        contract_scene = #{contractScene,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null">
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="contractUrl != null">
+        contract_url = #{contractUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityNumber != null">
+        identity_number = #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null">
+        contract_date = current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdPaypointUserContract">
+    update yd_paypoint_user_contract
+    set contract_name = #{contractName,jdbcType=VARCHAR},
+      contract_scene = #{contractScene,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      contract_url = #{contractUrl,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      identity_number = #{identityNumber,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      contract_date = current_timestamp(0),
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

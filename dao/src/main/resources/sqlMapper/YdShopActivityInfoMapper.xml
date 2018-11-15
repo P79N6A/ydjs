@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.ydsp.dal.mapper.YdShopActivityInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yd.ydsp.dal.entity.YdShopActivityInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shopid" jdbcType="VARCHAR" property="shopid" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activityid" jdbcType="VARCHAR" property="activityid" />
+    <result column="resouce_type" jdbcType="INTEGER" property="resouceType" />
+    <result column="resouce_url" jdbcType="VARCHAR" property="resouceUrl" />
+    <result column="pic_list" jdbcType="VARCHAR" property="picList" />
+    <result column="flag" jdbcType="BIGINT" property="flag" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="feature1" jdbcType="VARCHAR" property="feature1" />
+    <result column="feature2" jdbcType="VARCHAR" property="feature2" />
+    <result column="feature3" jdbcType="VARCHAR" property="feature3" />
+    <result column="feature4" jdbcType="VARCHAR" property="feature4" />
+    <result column="feature5" jdbcType="VARCHAR" property="feature5" />
+    <result column="feature6" jdbcType="VARCHAR" property="feature6" />
+    <result column="feature7" jdbcType="VARCHAR" property="feature7" />
+    <result column="feature8" jdbcType="VARCHAR" property="feature8" />
+    <result column="feature9" jdbcType="VARCHAR" property="feature9" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="year_info" jdbcType="VARCHAR" property="yearInfo" />
+    <result column="month_info" jdbcType="VARCHAR" property="monthInfo" />
+    <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shopid, activity_name, activityid, resouce_type, resouce_url, pic_list, flag, feature, feature1,
+    feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9, status, year_info,month_info,
+    begin_date, end_date, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByActivityid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where activityid = #{activityid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByActivityidRowLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where activityid = #{activityid,jdbcType=VARCHAR} FOR UPDATE;
+  </select>
+
+  <select id="selectByShopidInYear" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and year_info = #{yearInfo,jdbcType=VARCHAR} ORDER BY id desc  limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByShopidInMoth" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and year_info = #{yearInfo,jdbcType=VARCHAR} and month_info=#{monthInfo,jdbcType=VARCHAR} ORDER BY id desc  limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByShopidInYearStatus" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and year_info = #{yearInfo,jdbcType=VARCHAR} and status=#{status,jdbcType=INTEGER} ORDER BY id desc  limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByShopidInMonthStatus" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from yd_shop_activity_info
+    where shopid = #{shopid,jdbcType=VARCHAR} and year_info = #{yearInfo,jdbcType=VARCHAR} and month_info=#{monthInfo,jdbcType=VARCHAR} and status=#{status,jdbcType=INTEGER} ORDER BY id desc  limit #{count,jdbcType=INTEGER} offset #{indexPoint,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from yd_shop_activity_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yd.ydsp.dal.entity.YdShopActivityInfo">
+    insert into yd_shop_activity_info (id, shopid, activityid, activity_name,
+      resouce_type, resouce_url, pic_list, 
+      flag, feature, feature1, 
+      feature2, feature3, feature4, 
+      feature5, feature6, feature7, 
+      feature8, feature9, status, year_info, month_info,
+      begin_date, end_date, create_date, 
+      modify_date)
+    values (nextval('seq_yd_shop_activity_info_id'), #{shopid,jdbcType=VARCHAR}, #{activityid,jdbcType=VARCHAR},#{activityName,jdbcType=VARCHAR},
+      #{resouceType,jdbcType=INTEGER}, #{resouceUrl,jdbcType=VARCHAR}, #{picList,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=BIGINT}, #{feature,jdbcType=VARCHAR}, #{feature1,jdbcType=VARCHAR}, 
+      #{feature2,jdbcType=VARCHAR}, #{feature3,jdbcType=VARCHAR}, #{feature4,jdbcType=VARCHAR}, 
+      #{feature5,jdbcType=VARCHAR}, #{feature6,jdbcType=VARCHAR}, #{feature7,jdbcType=VARCHAR}, 
+      #{feature8,jdbcType=VARCHAR}, #{feature9,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{yearInfo,jdbcType=VARCHAR}, #{monthInfo,jdbcType=VARCHAR},
+      #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, current_timestamp(0),
+      current_timestamp(0))
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.ydsp.dal.entity.YdShopActivityInfo">
+    insert into yd_shop_activity_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+      <if test="activityid != null">
+        activityid,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="resouceType != null">
+        resouce_type,
+      </if>
+      <if test="resouceUrl != null">
+        resouce_url,
+      </if>
+      <if test="picList != null">
+        pic_list,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="feature1 != null">
+        feature1,
+      </if>
+      <if test="feature2 != null">
+        feature2,
+      </if>
+      <if test="feature3 != null">
+        feature3,
+      </if>
+      <if test="feature4 != null">
+        feature4,
+      </if>
+      <if test="feature5 != null">
+        feature5,
+      </if>
+      <if test="feature6 != null">
+        feature6,
+      </if>
+      <if test="feature7 != null">
+        feature7,
+      </if>
+      <if test="feature8 != null">
+        feature8,
+      </if>
+      <if test="feature9 != null">
+        feature9,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="yearInfo != null">
+        year_info,
+      </if>
+      <if test="monthInfo != null">
+        month_info,
+      </if>
+      <if test="beginDate != null">
+        begin_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        nextval('seq_yd_shop_activity_info_id'),
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityid != null">
+        #{activityid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="resouceType != null">
+        #{resouceType,jdbcType=INTEGER},
+      </if>
+      <if test="resouceUrl != null">
+        #{resouceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picList != null">
+        #{picList,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="feature1 != null">
+        #{feature1,jdbcType=VARCHAR},
+      </if>
+      <if test="feature2 != null">
+        #{feature2,jdbcType=VARCHAR},
+      </if>
+      <if test="feature3 != null">
+        #{feature3,jdbcType=VARCHAR},
+      </if>
+      <if test="feature4 != null">
+        #{feature4,jdbcType=VARCHAR},
+      </if>
+      <if test="feature5 != null">
+        #{feature5,jdbcType=VARCHAR},
+      </if>
+      <if test="feature6 != null">
+        #{feature6,jdbcType=VARCHAR},
+      </if>
+      <if test="feature7 != null">
+        #{feature7,jdbcType=VARCHAR},
+      </if>
+      <if test="feature8 != null">
+        #{feature8,jdbcType=VARCHAR},
+      </if>
+      <if test="feature9 != null">
+        #{feature9,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="yearInfo != null">
+        #{yearInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="monthInfo != null">
+        #{monthInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        current_timestamp(0),
+      </if>
+      <if test="modifyDate != null">
+        current_timestamp(0),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.ydsp.dal.entity.YdShopActivityInfo">
+    update yd_shop_activity_info
+    <set>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityid != null">
+        activityid = #{activityid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="resouceType != null">
+        resouce_type = #{resouceType,jdbcType=INTEGER},
+      </if>
+      <if test="resouceUrl != null">
+        resouce_url = #{resouceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picList != null">
+        pic_list = #{picList,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIGINT},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="feature1 != null">
+        feature1 = #{feature1,jdbcType=VARCHAR},
+      </if>
+      <if test="feature2 != null">
+        feature2 = #{feature2,jdbcType=VARCHAR},
+      </if>
+      <if test="feature3 != null">
+        feature3 = #{feature3,jdbcType=VARCHAR},
+      </if>
+      <if test="feature4 != null">
+        feature4 = #{feature4,jdbcType=VARCHAR},
+      </if>
+      <if test="feature5 != null">
+        feature5 = #{feature5,jdbcType=VARCHAR},
+      </if>
+      <if test="feature6 != null">
+        feature6 = #{feature6,jdbcType=VARCHAR},
+      </if>
+      <if test="feature7 != null">
+        feature7 = #{feature7,jdbcType=VARCHAR},
+      </if>
+      <if test="feature8 != null">
+        feature8 = #{feature8,jdbcType=VARCHAR},
+      </if>
+      <if test="feature9 != null">
+        feature9 = #{feature9,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null">
+        begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = current_timestamp(0),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.ydsp.dal.entity.YdShopActivityInfo">
+    update yd_shop_activity_info
+    set shopid = #{shopid,jdbcType=VARCHAR},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activityid = #{activityid,jdbcType=VARCHAR},
+      resouce_type = #{resouceType,jdbcType=INTEGER},
+      resouce_url = #{resouceUrl,jdbcType=VARCHAR},
+      pic_list = #{picList,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIGINT},
+      feature = #{feature,jdbcType=VARCHAR},
+      feature1 = #{feature1,jdbcType=VARCHAR},
+      feature2 = #{feature2,jdbcType=VARCHAR},
+      feature3 = #{feature3,jdbcType=VARCHAR},
+      feature4 = #{feature4,jdbcType=VARCHAR},
+      feature5 = #{feature5,jdbcType=VARCHAR},
+      feature6 = #{feature6,jdbcType=VARCHAR},
+      feature7 = #{feature7,jdbcType=VARCHAR},
+      feature8 = #{feature8,jdbcType=VARCHAR},
+      feature9 = #{feature9,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      modify_date = current_timestamp(0)
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
